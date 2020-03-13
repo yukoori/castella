@@ -15,7 +15,7 @@ public:
 	virtual ~SCPThreadTask();
 
 	virtual int		Open();
-	virtual void	Close();
+	virtual int		Close();
 
 	pthread_t		getHandle();
 	unsigned int	getThreadId();

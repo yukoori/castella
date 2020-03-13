@@ -68,6 +68,8 @@ void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 		return;
 	}
 
+	SCMutexMgr mgr(_mutex);
+
 	va_list argp;
 	va_start(argp, format);
 

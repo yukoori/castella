@@ -4,7 +4,7 @@ SCPThreadTask::SCPThreadTask()
 	: _thread(0)
 	, _thread_id(0)
 	, _status(NULL)
-	, _time_out(1000)
+	, _time_out(0)
 {
 
 }
@@ -40,9 +40,10 @@ int SCPThreadTask::Open()
 	return 0;
 }
 
-void SCPThreadTask::Close()
+int SCPThreadTask::Close()
 {
 	pthread_join(_thread, &_status);
+	return _status;
 }
 
 pthread_t SCPThreadTask::getHandle()

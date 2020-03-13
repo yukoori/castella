@@ -4,6 +4,7 @@
 #include "SCLogDefine.h"
 #include "SCLogStream.h"
 #include "SCLogFormat.h"
+#include "SCMutex.h"
 
 #include <cstdarg>
 #include <vector>
@@ -37,6 +38,8 @@ private:
 	SCLogFormat*				_format;
 	bool						_bFormatDelete;
 	ELogLevel					_logLevel;
+
+	SCMutex						_mutex;
 };
 
 #include "SCLogger.inl"

@@ -10,7 +10,7 @@ public:
 	virtual ~SCWindowsTask();
 
 	virtual int		Open();
-	virtual void	Close();
+	virtual int		Close();
 
 	HANDLE	getHandle();
 	DWORD	getThreadId();

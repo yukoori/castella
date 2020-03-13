@@ -3,7 +3,7 @@
 SCWindowsTask::SCWindowsTask()
 	: _handle(NULL)
 	, _thread_id(0)
-	, _time_out(1000)
+	, _time_out(0)
 {
 
 }
@@ -20,10 +20,11 @@ int	SCWindowsTask::Open()
 	{
 		return -1;
 	}
+
 	return 0;
 }
 
-void SCWindowsTask::Close()
+int SCWindowsTask::Close()
 {
 	if (_time_out == 0)
 	{
@@ -33,7 +34,8 @@ void SCWindowsTask::Close()
 	{
 		::WaitForSingleObject(_handle, _time_out);
 	}
-	::CloseHandle(_handle);
+	
+	return ::CloseHandle(_handle) ? 0 : -1;
 }
 
 HANDLE SCWindowsTask::getHandle()

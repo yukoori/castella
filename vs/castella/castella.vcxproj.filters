@@ -63,7 +63,10 @@
     <ClInclude Include="..\..\src\log\SCFileStream.h">
       <Filter>Header Files\log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\castella\SCMutex.h">
+    <ClInclude Include="..\..\src\common\SCOS.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\SCMutex.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,13 +23,13 @@ private:
 };
 
 template<class T>
-SCTask<class T>::SCTask()
+SCTask<T>::SCTask()
 {
 	_task = new T;
 }
 
 template<class T>
-SCTask<class T>::~SCTask()
+SCTask<T>::~SCTask()
 {
 	if (_task)
 	{
@@ -39,19 +39,19 @@ SCTask<class T>::~SCTask()
 }
 
 template<class T>
-int SCTask<class T>::Open()
+int SCTask<T>::Open()
 {
 	return _task->Open();
 }
 
 template<class T>
-int SCTask<class T>::Close()
+int SCTask<T>::Close()
 {
 	return _task->Close();
 }
 
 template<class T>
-const T* SCTask<class T>::getObject() const
+const T* SCTask<T>::getObject() const
 {
 	return _task;
 }
