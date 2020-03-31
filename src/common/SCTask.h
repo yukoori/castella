@@ -2,59 +2,70 @@
 #define	__SCTASK_H
 
 #if defined(_WIN32) || defined(WIN64)
-#	include "SCWindowsTask.h"
-#elif defined(USE_PTHREAD)
-#	include "SCPThreadTask.h"
-#endif // defined(_WIN32) || defined(WIN64)
+#include <windows.h>
 
-template<class T>
 class SCTask
 {
 public:
 	SCTask();
 	virtual ~SCTask();
 
-	virtual int Open();
-	virtual int Close();
+	virtual int		Open();
+	virtual int		Close();
 
-	const T*	getObject() const;
+	HANDLE	getHandle();
+	DWORD	getThreadId();
+
+	void	setTimeOut(long nTimeOut);
+
+protected:
+	virtual	int svc() = 0;
+
+	HANDLE	_handle;
+	DWORD	_thread_id;
+
+	DWORD	_time_out;
+
 private:
-	T*	_task;
+	static unsigned long WINAPI svc_run(void* arg);
 };
 
-template<class T>
-SCTask<T>::SCTask()
-{
-	_task = new T;
-}
+#elif defined(USE_PTHREAD)
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <pthread.h>
 
-template<class T>
-SCTask<T>::~SCTask()
+class SCTask
 {
-	if (_task)
-	{
-		delete _task;
-	}
-	_task = NULL;
-}
+public:
+	SCTask();
+	virtual ~SCTask();
 
-template<class T>
-int SCTask<T>::Open()
-{
-	return _task->Open();
-}
+	virtual int		Open();
+	virtual int		Close();
 
-template<class T>
-int SCTask<T>::Close()
-{
-	return _task->Close();
-}
+	pthread_t		getHandle();
+	unsigned int	getThreadId();
 
-template<class T>
-const T* SCTask<T>::getObject() const
-{
-	return _task;
-}
+	void	setTimeOut(long nTimeOut);
+
+protected:
+	virtual	int svc() = 0;
+
+	pthread_t		_thread;
+	unsigned int	_thread_id;
+
+	void* _status;
+
+	unsigned int	_time_out;
+
+private:
+	static void* svc_run(void* arg);
+};
+#endif // defined(_WIN32) || defined(WIN64)
 
 #endif // !__SCTASK_H
 

@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../src/common;../../src/log</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/log;../../src/os</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../src/common;../../src/log</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/log;../../src/os</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,28 +146,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\common\SCAcceptor.h" />
+    <ClInclude Include="..\..\src\common\SCEventHandler.h" />
     <ClInclude Include="..\..\src\common\SCMutex.h" />
-    <ClInclude Include="..\..\src\common\SCOS.h" />
-    <ClInclude Include="..\..\src\common\SCPThreadTask.h" />
+    <ClInclude Include="..\..\src\common\SCSelectReactor.h" />
+    <ClInclude Include="..\..\src\common\SCSocketHandler.h" />
     <ClInclude Include="..\..\src\common\SCTask.h" />
-    <ClInclude Include="..\..\src\common\SCThread.h" />
-    <ClInclude Include="..\..\src\common\SCTypes.h" />
-    <ClInclude Include="..\..\src\common\SCWindowsTask.h" />
     <ClInclude Include="..\..\src\log\SCLogDefine.h" />
     <ClInclude Include="..\..\src\log\SCLogFormat.h" />
     <ClInclude Include="..\..\src\log\SCLogger.h" />
     <ClInclude Include="..\..\src\log\SCLogStream.h" />
     <ClInclude Include="..\..\src\log\SCFileStream.h" />
+    <ClInclude Include="..\..\src\os\SCOS.h" />
+    <ClInclude Include="..\..\src\os\SCSocket.h" />
+    <ClInclude Include="..\..\src\os\SCThread.h" />
+    <ClInclude Include="..\..\src\os\SCTypes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\common\SCEventHandler.cpp" />
     <ClCompile Include="..\..\src\common\SCPThreadTask.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\SCSelectReactor.cpp" />
+    <ClCompile Include="..\..\src\common\SCSocketHandler.cpp" />
     <ClCompile Include="..\..\src\common\SCWindowsTask.cpp" />
     <ClCompile Include="..\..\src\log\SCLogFormat.cpp" />
     <ClCompile Include="..\..\src\log\SCLogger.cpp" />
     <ClCompile Include="..\..\src\log\SCFileStream.cpp" />
+    <ClCompile Include="..\..\src\os\SCOS.cpp" />
+    <ClCompile Include="..\..\src\os\SCString.cpp" />
+    <ClCompile Include="..\..\src\os\SCThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\log\SCLogger.inl" />

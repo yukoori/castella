@@ -24,8 +24,6 @@ public:
 
 	// functions
 	void setLevel(ELogLevel logLevel);
-	const SCLogger& level(ELogLevel logLevel);
-
 	void addStream(SCLogStream* stream);
 	void setFormatSpecifier(const SCLogFormat* format = new SCLogFormat, bool bFormatDelete = true);
 

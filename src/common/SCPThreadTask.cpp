@@ -1,6 +1,6 @@
-#include "SCPThreadTask.h"
+#include "SCTask.h"
 
-SCPThreadTask::SCPThreadTask()
+SCTask::SCTask()
 	: _thread(0)
 	, _thread_id(0)
 	, _status(NULL)
@@ -9,12 +9,12 @@ SCPThreadTask::SCPThreadTask()
 
 }
 
-SCPThreadTask::~SCPThreadTask()
+SCTask::~SCTask()
 {
 
 }
 
-int SCPThreadTask::Open()
+int SCTask::Open()
 {
 	pthread_attr_t _attr;
 	if (pthread_attr_init(&_attr) != 0)
@@ -40,23 +40,23 @@ int SCPThreadTask::Open()
 	return 0;
 }
 
-int SCPThreadTask::Close()
+int SCTask::Close()
 {
 	pthread_join(_thread, &_status);
 	return _status;
 }
 
-pthread_t SCPThreadTask::getHandle()
+pthread_t SCTask::getHandle()
 {
 	return _thread;
 }
 
-unsigned int SCPThreadTask::getThreadId()
+unsigned int SCTask::getThreadId()
 {
 	return pthread_self();
 }
 
-void* SCPThreadTask::svc_run(void* arg)
+void* SCTask::svc_run(void* arg)
 {
 	SCPThreadTask* task = (SCPThreadTask*)arg;
 	int nRet = task->svc();

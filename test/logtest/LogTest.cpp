@@ -25,25 +25,17 @@ int main(int argc, char* argv[])
 	SCLOG(logger, ELogLevel::SC_E_LOG_WARNING, SCTEXT("%s"), SCTEXT("Test WARNING String."));
 
 	// multi thread Å×½ºÆ®
-	std::vector<SCTask<LogTestTask>*> vTask;
+	std::vector<LogTestTask*> vTask;
 	for (int i = 0; i < 10; ++i)
 	{
-		SCTask<LogTestTask>* pTask = new SCTask<LogTestTask>;
+		LogTestTask* pTask = new LogTestTask;
 		if (pTask == NULL)
 		{
 			continue;
 		}
 
-		LogTestTask* p = const_cast<LogTestTask*>(reinterpret_cast<const LogTestTask*>(pTask->getObject()));
-		if (p == NULL)
-		{
-			delete pTask;
-			pTask = NULL;
-			continue;
-		}
-
-		p->setLogger(logger);
-		p->setSid(i);
+		pTask->setLogger(logger);
+		pTask->setSid(i);
 
 		if (pTask->Open() != 0)
 		{
@@ -53,11 +45,11 @@ int main(int argc, char* argv[])
 		vTask.push_back(pTask);
 	}
 
-	std::vector<SCTask<LogTestTask>*>::iterator iter_s = vTask.begin();
-	std::vector<SCTask<LogTestTask>*>::iterator iter_e = vTask.end();
+	std::vector<LogTestTask*>::iterator iter_s = vTask.begin();
+	std::vector<LogTestTask*>::iterator iter_e = vTask.end();
 	for (; iter_s != iter_e; ++iter_s)
 	{
-		SCTask<LogTestTask>* pTask = (*iter_s);
+		LogTestTask* pTask = (*iter_s);
 		if (pTask == NULL)
 		{
 			continue;

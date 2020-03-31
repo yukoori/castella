@@ -4,7 +4,7 @@
 #include "SCTask.h"
 #include "SCLogger.h"
 
-class LogTestTask : public SCWindowsTask
+class LogTestTask : public SCTask
 {
 public:
 	LogTestTask();

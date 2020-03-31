@@ -23,6 +23,8 @@ public:
 	void componet(const SCChar* pComponent);
 	const SCChar* componet() const;
 
+	const SCString getFileName() const;
+
 protected:
 private:
 	SCString	_path;

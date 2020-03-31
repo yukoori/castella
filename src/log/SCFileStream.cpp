@@ -22,28 +22,18 @@ int SCFileStream::open()
 		return 0;
 	}
 
-	_output = new SCOFStream();
-
-	time_t	tCurrent = time(NULL);
-	struct tm tmCurrent;
-	
-	errno_t error = localtime_s(&tmCurrent, &tCurrent);
-	if (error != 0)
+	SCString logPath = this->getFileName();
+	if (logPath.length() == 0)
 	{
-		SCPRINTF(SCTEXT("Fail to get localtime for log file.\n"));
 		return -1;
 	}
 
-	SCChar	logPath[1024] = { '\0', };
-	SCSPRINTF(logPath, 1024, SCTEXT("%s%s.%04d%02d%02d.log"), _path.c_str(), _component.c_str(),
-														 tmCurrent.tm_year + 1900, 
-														 tmCurrent.tm_mon + 1,
-														 tmCurrent.tm_mday);
+	_output = new SCOFStream();
 
 	_output->open(logPath, std::ios::app);
 	if (!_output->good())
 	{
-		SCPRINTF(SCTEXT("Log File open Failed(%s)\n"), logPath);
+		SCPRINTF(SCTEXT("Log File open Failed(%s)\n"), logPath.c_str());
 		return -1;
 	}
 
@@ -93,4 +83,27 @@ void SCFileStream::componet(const SCChar* pComponent)
 const SCChar* SCFileStream::componet() const
 {
 	return _component.c_str();
+}
+
+const SCString SCFileStream::getFileName() const
+{
+	SCString fileName;
+
+	time_t	tCurrent = time(NULL);
+	struct tm tmCurrent;
+
+	errno_t error = localtime_s(&tmCurrent, &tCurrent);
+	if (error != 0)
+	{
+		SCPRINTF(SCTEXT("Fail to get localtime for log file.\n"));
+		return fileName;
+	}
+
+	SCChar	logPath[1024] = { '\0', };
+	SCSPRINTF(logPath, 1024, SCTEXT("%s%s.%04d%02d%02d.log"), _path.c_str(), _component.c_str(),
+																tmCurrent.tm_year + 1900,
+																tmCurrent.tm_mon + 1,
+																tmCurrent.tm_mday);
+	fileName = logPath;
+	return fileName;
 }
