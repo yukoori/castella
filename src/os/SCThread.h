@@ -1,7 +1,7 @@
 #ifndef __SCTHREAD_H
 #define __SCTHREAD_H
 
-#if defined(_PTHREAD)
+#if defined(USE_PTHREAD)
 #	include <pthread.h>
 #	include <sys/types.h>
 #	include <unistd.h>

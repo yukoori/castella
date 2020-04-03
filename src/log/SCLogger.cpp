@@ -58,7 +58,7 @@ void SCLogger::setLevel(ELogLevel logLevel)
 
 void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 {
-	if (logLevel > _logLevel)
+	if ((int)logLevel > (int)_logLevel)
 	{
 		return;
 	}

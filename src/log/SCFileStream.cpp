@@ -1,7 +1,9 @@
 #include "SCFileStream.h"
 
 #include <time.h>
-#include <Windows.h>
+#if defined(_WIN32) || defined(_WIN64)
+#	include <Windows.h>
+#endif // defined(_WIN32) || defined(_WIN64)
 
 SCFileStream::SCFileStream()
 	: _output(NULL)
@@ -92,12 +94,21 @@ const SCString SCFileStream::getFileName() const
 	time_t	tCurrent = time(NULL);
 	struct tm tmCurrent;
 
+#if defined(_WIN32) || defined(_WIN64)
 	errno_t error = localtime_s(&tmCurrent, &tCurrent);
 	if (error != 0)
 	{
 		SCPRINTF(SCTEXT("Fail to get localtime for log file.\n"));
 		return fileName;
 	}
+#else
+	struct tm* result = localtime_r(&tCurrent, &tmCurrent);
+	if (result == NULL)
+	{
+		SCPRINTF(SCTEXT("Fail to get localtime for log file.\n"));
+		return fileName;
+	}
+#endif // defined(_WIN32) || defined(_WIN64)
 
 	SCChar	logPath[1024] = { '\0', };
 	SCSPRINTF(logPath, 1024, SCTEXT("%s%s.%04d%02d%02d.log"), _path.c_str(), _component.c_str(),

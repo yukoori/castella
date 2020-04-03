@@ -2,7 +2,9 @@
 #include "SCThread.h"
 
 #include <time.h>
-#include <Windows.h>
+#if defined(_WIN32) || defined(_WIN64)
+#	include <Windows.h>
+#endif // defined(_WIN32) || defined(_WIN64)
 
 SCLogFormat::SCLogFormat()
 {
@@ -40,16 +42,30 @@ void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list ar
 	struct tm tmCurrent;
 
 	SCChar prefixTime[64] = { '\0', };
+
+#if defined(_WIN32) || defined(_WIN64)
 	errno_t error = localtime_s(&tmCurrent, &tCurrent);
 	if (error == 0)
 	{
 		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d] "), tmCurrent.tm_year + 1900,
-																			  tmCurrent.tm_mon + 1,
-																			  tmCurrent.tm_mday,
-																			  tmCurrent.tm_hour,
-																			  tmCurrent.tm_min,
-																			  tmCurrent.tm_sec);
+			tmCurrent.tm_mon + 1,
+			tmCurrent.tm_mday,
+			tmCurrent.tm_hour,
+			tmCurrent.tm_min,
+			tmCurrent.tm_sec);
 	}
+#else
+	struct tm* result = localtime_r(&tCurrent, &tmCurrent);
+	if (result == NULL)
+	{
+		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d] "), tmCurrent.tm_year + 1900,
+			tmCurrent.tm_mon + 1,
+			tmCurrent.tm_mday,
+			tmCurrent.tm_hour,
+			tmCurrent.tm_min,
+			tmCurrent.tm_sec);
+	}
+#endif // defined(_WIN32) || defined(_WIN64)
 
 	// 
 	SCChar prefixThread[32] = { '\0', };

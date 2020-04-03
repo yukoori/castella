@@ -2,6 +2,9 @@
 #define	__SCTYPES_H
 
 #include <string>
+#if !defined(_WIN32) && !defined(_WIN64)
+#	include <string.h>
+#endif // !defined(_WIN32) && !defined(_WIN64)
 
 #ifdef UNICODE
 #	include	<tchar.h>
@@ -25,7 +28,11 @@
 #	define	SCString					std::string
 #	define	SCOFStream					std::ofstream
 #	define	SCSPRINTF(b, s, f, ...)		snprintf(b, s, f, __VA_ARGS__)
+#if defined(_WIN32) || defined(_WIN64)
 #	define	SCVSPRINTF					vsprintf_s
+#else
+#	define	SCVSPRINTF					vsprintf
+#endif	// defined(_WIN32) || defined(_WIN64)
 #	define	SCPRINTF					printf
 #	define	SCTEXT(x)					x
 #	define	WIDEN(x)					SCTEXT(x)

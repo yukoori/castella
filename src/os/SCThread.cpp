@@ -21,7 +21,7 @@ namespace SCThread
 	}
 	SC_THREAD_T tid()
 	{
-		SC_THREAD_T tid = gettid();
+		SC_THREAD_T tid = pthread_self();
 		return tid;
 	}
 #endif // defined(_WIN32) || defined(_WIN64)

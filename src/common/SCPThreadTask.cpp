@@ -27,7 +27,7 @@ int SCTask::Open()
 		return -1;
 	}
 
-	_thread_id = pthread_create(&_thread, NULL, CNCIPMSAbstractThread::svc_run, this);
+	_thread_id = pthread_create(&_thread, NULL, SCTask::svc_run, this);
 	if (_thread_id < 0) {
 		return -1;
 	}
@@ -41,9 +41,8 @@ int SCTask::Open()
 }
 
 int SCTask::Close()
-{
-	pthread_join(_thread, &_status);
-	return _status;
+{	
+	return pthread_join(_thread, &_status);
 }
 
 pthread_t SCTask::getHandle()
@@ -58,7 +57,7 @@ unsigned int SCTask::getThreadId()
 
 void* SCTask::svc_run(void* arg)
 {
-	SCPThreadTask* task = (SCPThreadTask*)arg;
+	SCTask* task = (SCTask*)arg;
 	int nRet = task->svc();
 	return &nRet;
 }

@@ -75,14 +75,14 @@ int SCSelectReactor::svc()
 		fd_set	fdset;
 		FD_ZERO(&fdset);
 
-		this->set_sockethandle(fdset);
+		int maxfd = 0;
+		this->set_sockethandle(fdset, maxfd);
 
 #ifdef _HPUX_
-		int nRet = select(_map_handler.size() + 1, (int*)&_fd_set, NULL, NULL, &tv);
+		int nRet = select(maxfd + 1, (int*)&_fd_set, NULL, NULL, &tv);
 #else
-		int nRet = select((int)_map_handler.size() + 1, &fdset, NULL, NULL, &tv);
+		int nRet = select(maxfd + 1, &fdset, NULL, NULL, &tv);
 #endif
-		SCPRINTF(SCTEXT("Error = %d %d (%d)\n"), nRet, SC_SOCKET_LASTERR, fdset.fd_count);
 		if (nRet < 0)
 		{
 			if (SC_SOCKET_LASTERR == SC_SOCKET_ERR_EINTR)
@@ -134,14 +134,21 @@ SCEventHandler* SCSelectReactor::find_handler(fd_set& fdset, SC_SOCKET_HANDLE& h
 	return NULL;
 }
 
-void SCSelectReactor::set_sockethandle(fd_set& fdset)
+void SCSelectReactor::set_sockethandle(fd_set& fdset, int& maxfd)
 {
+	SCMutexMgr mutex(_mutex);
+	
 	std::map<SC_SOCKET_HANDLE, SCEventHandler*>::iterator iter_s = _map_handler.begin();
 	std::map<SC_SOCKET_HANDLE, SCEventHandler*>::iterator iter_e = _map_handler.end();
 	for (; iter_s != iter_e; ++iter_s)
 	{
 		if (iter_s->first != SC_SOCKET_INVALID)
 		{
+			if (maxfd < iter_s->first)
+			{
+				maxfd = (int)iter_s->first;
+			}
+			
 			FD_SET(iter_s->first, &fdset);
 		}
 	}

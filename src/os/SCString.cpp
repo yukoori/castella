@@ -1,16 +1,16 @@
 #include "SCTypes.h"
 
-#include <windows.h>
+#if defined(_WIN32) || defined(_WIN64)
+#	include <windows.h>
+#else
+#	include <stdlib.h>
+#endif	// defined(_WIN32) || defined(_WIN64)
 
 const SCChar* TOSCChar(const char* data)
 {
-	if (sizeof(SCChar) == sizeof(char))
-	{
-		return (SCChar*)data;
-	}
-
+#ifdef UNICODE
 	SCString returnString;
-#if defined(_WIN32) || defined(_WIN64)
+#	if defined(_WIN32) || defined(_WIN64)
 	int nLen = MultiByteToWideChar(CP_ACP, 0, data, strlen(data), NULL, NULL);
 	if (nLen <= 0)
 	{
@@ -32,10 +32,9 @@ const SCChar* TOSCChar(const char* data)
 	returnString = toData;
 
 	free(toData);
-#else
-	int nLen = 0;
-	int error = mbstowcs_s(&nLen, NULL, 0, data, strlen(data));
-	if (error != 0)
+#	else	// defined(_WIN32) || defined(_WIN64)
+	int nLen = mbstowcs(NULL, data, strlen(data));
+	if (nLen == 0)
 	{
 		return returnString.c_str();
 	}
@@ -46,7 +45,7 @@ const SCChar* TOSCChar(const char* data)
 		return returnString.c_str();
 	}
 
-	mbstowcs_s(NULL, toData, nLen, data, strlen(data));
+	mbstowcs(toData, data, strlen(data));
 	if (STRLEN(toData) <= 0)
 	{
 		return returnString.c_str();
@@ -55,19 +54,18 @@ const SCChar* TOSCChar(const char* data)
 	returnString = toData;
 
 	free(toData);
-#endif	// defined(_WIN32) || defined(_WIN64)
+#	endif	// defined(_WIN32) || defined(_WIN64)
 	return returnString.c_str();
+#else	// UNICODE
+	return (SCChar*)data;
+#endif	// UNICODE
 }
 
 const char* TOChar(const SCChar* data)
 {
-	if (sizeof(SCChar) == sizeof(char))
-	{
-		return (char*)data;
-	}
-
+#ifdef UNICODE
 	std::string returnString;
-#if defined(_WIN32) || defined(_WIN64)
+#	if defined(_WIN32) || defined(_WIN64)
 	int nLen = WideCharToMultiByte(CP_ACP, 0, data, -1, NULL, 0, NULL, NULL);
 	if (nLen <= 0)
 	{
@@ -89,9 +87,8 @@ const char* TOChar(const SCChar* data)
 	returnString = toData;
 
 	free(toData);
-#else
-	int nLen = 0;
-	int error = wcstombs_s(&nLen, NULL, 0, data, STRLEN(data));
+#	else	// defined(_WIN32) || defined(_WIN64)
+	int nLen = wcstombs(NULL, data, STRLEN(data));
 	if (nLen <= 0)
 	{
 		return returnString.c_str();
@@ -103,7 +100,7 @@ const char* TOChar(const SCChar* data)
 		return returnString.c_str();
 	}
 
-	wcstombs_s(NULL, toData, nLen, data, STRLEN(data));
+	wcstombs(toData, data, STRLEN(data));
 	if (strlen(toData) <= 0)
 	{
 		return returnString.c_str();
@@ -112,6 +109,9 @@ const char* TOChar(const SCChar* data)
 	returnString = toData;
 
 	free(toData);
-#endif	// defined(_WIN32) || defined(_WIN64)
+#	endif	// defined(_WIN32) || defined(_WIN64)
 	return returnString.c_str();
+#else	// UNICODE
+	return (char*)data;
+#endif	// UNICODE
 }

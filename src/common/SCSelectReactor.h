@@ -22,7 +22,7 @@ public:
 private:
 	virtual	int svc();
 
-	void set_sockethandle(fd_set& fdset);
+	void set_sockethandle(fd_set& fdset, int& maxfd);
 	SCEventHandler* find_handler(fd_set& fdset, SC_SOCKET_HANDLE& handle);
 
 	// member values

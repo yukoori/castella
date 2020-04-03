@@ -8,7 +8,11 @@
 int main(int argc, char* argv[])
 {
 	SCFileStream stream;
+#if defined(_WIN32) || defined(_WIN64)
 	stream.path(SCTEXT(".\\"));
+#else	// defined(_WIN32) || defined(_WIN64)
+	stream.path(SCTEXT("./"));
+#endif	// defined(_WIN32) || defined(_WIN64)
 	stream.componet(SCTEXT("dslogtest"));
 
 	SCLogger logger;

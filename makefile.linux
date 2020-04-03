@@ -1,0 +1,27 @@
+# 컴파일러
+CC 		= gcc
+CXX		= g++
+LD 		= g++
+
+AR 		= ar
+ARFLAGS = qv
+
+# 기본 옵션 설정
+DEFS = -DUSE_PTHREAD
+
+CFLAGS = -m64 -fPIC -ggdb -std=c++0x -Wno-write-strings -Wno-strict-aliasing
+SH_CFLAGS =
+
+LDFLAGS = -o 
+SH_LDFLAGS = -shared
+BINLDFLAGS = $(CFLAGS) $(LDFLAGS)
+
+LINK_SHARED	=
+
+# 명칭 설정
+PREFIX_SO = so
+PREFIX_A = a
+
+#
+INCLDIRS	+= 
+LIBS		+= 
