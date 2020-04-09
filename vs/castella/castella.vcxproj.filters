@@ -84,6 +84,18 @@
     <ClInclude Include="..\..\src\common\SCSelectReactor.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\SCIniParser.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\SCNodeComponent.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\SCNode.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\SCNodeItem.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\SCPThreadTask.cpp">
@@ -118,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\os\SCString.cpp">
       <Filter>Source Files\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\SCIniParser.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\SCNode.cpp">
+      <Filter>Source Files\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

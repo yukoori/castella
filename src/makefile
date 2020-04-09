@@ -9,6 +9,8 @@ FILES	= ./common/SCEventHandler.cpp \
 		./common/SCPThreadTask.cpp \
 		./common/SCSelectReactor.cpp \
 		./common/SCSocketHandler.cpp \
+		./common/SCIniParser.cpp \
+		./common/SCNode.cpp \
 		./log/SCFileStream.cpp \
 		./log/SCLogFormat.cpp \
 		./log/SCLogger.cpp \

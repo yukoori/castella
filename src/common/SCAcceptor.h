@@ -152,7 +152,7 @@ int SCAcceptor<T>::accept_loop()
 		
 		T* handler = make_handler();
 		handler->socket(client);
-		handler->peer(TOSCChar(inet_ntoa(client_addr.sin_addr)), client_addr.sin_port);
+		handler->peer(TOSCChar(inet_ntoa(client_addr.sin_addr)).c_str(), client_addr.sin_port);
 
 		int nRet = _reactor.set_handler(client, handler);
 		if( nRet != 0 )

@@ -4,6 +4,8 @@
 #include <string>
 #if !defined(_WIN32) && !defined(_WIN64)
 #	include <string.h>
+#else
+#	include <windows.h>
 #endif // !defined(_WIN32) && !defined(_WIN64)
 
 #ifdef UNICODE
@@ -17,6 +19,7 @@
 #	define	SCTEXT(x)					L ## x
 #	define	WIDEN(x)					SCTEXT(x)
 #	define	__SCFILE__					WIDEN(__FILE__)
+#	define	SCFPRINTF(p, f, ...)		fwprintf(p, f, __VA_ARGS__)
 #if defined(_WIN32) || defined(_WIN64)
 #	define	STRNCPY						wcsncpy_s
 #else
@@ -37,6 +40,7 @@
 #	define	SCTEXT(x)					x
 #	define	WIDEN(x)					SCTEXT(x)
 #	define	__SCFILE__					__FILE__
+#	define	SCFPRINTF(p, f, ...)		fprintf(p, f, __VA_ARGS__)
 #if defined(_WIN32) || defined(_WIN64)
 #	define	STRNCPY						strncpy_s
 #else
@@ -45,8 +49,8 @@
 #	define	STRLEN						strlen
 #endif // UNICODE
 
-extern const SCChar* TOSCChar(const char* data);
-extern const char* TOChar(const SCChar* data);
+extern const SCString TOSCChar(const char* data);
+extern const std::string TOChar(const SCChar* data);
 
 #endif // !__SCTYPES_H
 

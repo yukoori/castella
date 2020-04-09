@@ -18,15 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="IniParserTest.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{3DDB945E-876D-44BC-84EF-7DB8B723DB60}</ProjectGuid>
-    <RootNamespace>castella</RootNamespace>
+    <ProjectGuid>{C83B99D3-765E-417C-B3F4-8413C88CB30F}</ProjectGuid>
+    <RootNamespace>iniparsertest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -39,7 +42,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -69,10 +72,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,22 +84,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../src/common;../../src/log;../../src/os</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)$(Configuration)\$(ProjectName).lib ..\..\lib\.</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,10 +95,21 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../lib/$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>castella.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).lib ..\..\lib\$(Platform)\.</Command>
-    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -145,48 +143,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\common\SCAcceptor.h" />
-    <ClInclude Include="..\..\src\common\SCEventHandler.h" />
-    <ClInclude Include="..\..\src\common\SCIniParser.h" />
-    <ClInclude Include="..\..\src\common\SCMutex.h" />
-    <ClInclude Include="..\..\src\common\SCNode.h" />
-    <ClInclude Include="..\..\src\common\SCNodeComponent.h" />
-    <ClInclude Include="..\..\src\common\SCNodeItem.h" />
-    <ClInclude Include="..\..\src\common\SCSelectReactor.h" />
-    <ClInclude Include="..\..\src\common\SCSocketHandler.h" />
-    <ClInclude Include="..\..\src\common\SCTask.h" />
-    <ClInclude Include="..\..\src\log\SCLogDefine.h" />
-    <ClInclude Include="..\..\src\log\SCLogFormat.h" />
-    <ClInclude Include="..\..\src\log\SCLogger.h" />
-    <ClInclude Include="..\..\src\log\SCLogStream.h" />
-    <ClInclude Include="..\..\src\log\SCFileStream.h" />
-    <ClInclude Include="..\..\src\os\SCOS.h" />
-    <ClInclude Include="..\..\src\os\SCSocket.h" />
-    <ClInclude Include="..\..\src\os\SCThread.h" />
-    <ClInclude Include="..\..\src\os\SCTypes.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\common\SCEventHandler.cpp" />
-    <ClCompile Include="..\..\src\common\SCIniParser.cpp" />
-    <ClCompile Include="..\..\src\common\SCNode.cpp" />
-    <ClCompile Include="..\..\src\common\SCPThreadTask.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\SCSelectReactor.cpp" />
-    <ClCompile Include="..\..\src\common\SCSocketHandler.cpp" />
-    <ClCompile Include="..\..\src\common\SCWindowsTask.cpp" />
-    <ClCompile Include="..\..\src\log\SCLogFormat.cpp" />
-    <ClCompile Include="..\..\src\log\SCLogger.cpp" />
-    <ClCompile Include="..\..\src\log\SCFileStream.cpp" />
-    <ClCompile Include="..\..\src\os\SCOS.cpp" />
-    <ClCompile Include="..\..\src\os\SCString.cpp" />
-    <ClCompile Include="..\..\src\os\SCThread.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\src\log\SCLogger.inl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
