@@ -32,7 +32,7 @@ int SCFileStream::open()
 
 	_output = new SCOFStream();
 
-	_output->open(logPath, std::ios::app);
+	_output->open(logPath.c_str(), std::ios::app);
 	if (!_output->good())
 	{
 		SCPRINTF(SCTEXT("Log File open Failed(%s)\n"), logPath.c_str());

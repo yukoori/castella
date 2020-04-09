@@ -171,7 +171,7 @@ SCIniParser::set_session( const SCChar* value )
 
 	SCNode* node = new SCNode;
 	node->set_value(string_value);
-	node->set_type(SCNodeComponent::ComponentType::T_SESSION);
+	node->set_type(SCNodeComponent::T_SESSION);
 
 	if( !_root ) 
 	{
@@ -193,7 +193,7 @@ SCIniParser::set_key(const SCNodeComponent* session, const SCChar* value)
 
 	SCNode*	node = new SCNode;
 	node->set_value(string_value);
-	node->set_type(SCNodeComponent::ComponentType::T_KEY);
+	node->set_type(SCNodeComponent::T_KEY);
 
 	int idx = const_cast<SCNodeComponent*>(session)->add(node);
 
@@ -220,11 +220,11 @@ SCIniParser::print()
 void
 SCIniParser::print_child(const SCNodeComponent* pNode)
 {
-	if (pNode->get_type() == SCNodeComponent::ComponentType::T_SESSION)
+	if (pNode->get_type() == SCNodeComponent::T_SESSION)
 	{
 		SCPRINTF(SCTEXT("\n[%s]\n"), pNode->get_value().c_str());
 	}
-	else if (pNode->get_type() == SCNodeComponent::ComponentType::T_KEY)
+	else if (pNode->get_type() == SCNodeComponent::T_KEY)
 	{
 		SCPRINTF(SCTEXT("%s = "), pNode->get_value().c_str());
 	}
@@ -246,11 +246,11 @@ SCIniParser::print_child(const SCNodeComponent* pNode)
 void
 SCIniParser::save_child(FILE* fp, const SCNodeComponent* pNode)
 {
-	if (pNode->get_type() == SCNodeComponent::ComponentType::T_SESSION)
+	if (pNode->get_type() == SCNodeComponent::T_SESSION)
 	{
 		SCFPRINTF(fp, SCTEXT("\n[%s]\n"), pNode->get_value().c_str());
 	}
-	else if (pNode->get_type() == SCNodeComponent::ComponentType::T_KEY)
+	else if (pNode->get_type() == SCNodeComponent::T_KEY)
 	{
 		SCFPRINTF(fp, SCTEXT("%s = "), pNode->get_value().c_str());
 	}

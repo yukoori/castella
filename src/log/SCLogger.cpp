@@ -1,7 +1,7 @@
 #include "SCLogger.h"
 
 SCLogger::SCLogger()
-	: _logLevel(ELogLevel::SC_E_LOG_DEBUG)
+	: _logLevel(SC_E_LOG_DEBUG)
 	, _format(NULL)
 	, _bFormatDelete(false)
 {

@@ -21,16 +21,16 @@ void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list ar
 	SCString prefixLevel;
 	switch (logLevel)
 	{
-	case ELogLevel::SC_E_LOG_ERROR:
+	case SC_E_LOG_ERROR:
 		prefixLevel = SCTEXT("ERRO ");
 		break;
-	case ELogLevel::SC_E_LOG_WARNING:
+	case SC_E_LOG_WARNING:
 		prefixLevel = SCTEXT("WARN ");
 		break;
-	case ELogLevel::SC_E_LOG_INFO:
+	case SC_E_LOG_INFO:
 		prefixLevel = SCTEXT("INFO ");
 		break;
-	case ELogLevel::SC_E_LOG_DEBUG:
+	case SC_E_LOG_DEBUG:
 		prefixLevel = SCTEXT("DEBU ");
 		break;
 	default:

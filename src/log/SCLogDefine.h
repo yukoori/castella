@@ -3,12 +3,13 @@
 
 #include "SCTypes.h"
 
-enum class ELogLevel {
+typedef enum 
+{
 	SC_E_LOG_ERROR,
 	SC_E_LOG_WARNING,
 	SC_E_LOG_INFO,
 	SC_E_LOG_DEBUG
-};
+} ELogLevel;
 
 #if defined(_WIN32) || defined(_WIN64)
 #	define	SCLOG(OBJ, LEVEL, FORMAT, ...) \
