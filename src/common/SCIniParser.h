@@ -69,7 +69,6 @@ public:
 protected:
 private:
 	// member function
-	void		print_child(const SCNodeComponent* node);
 	void		save_child(FILE* fp, const SCNodeComponent* node);
 
 	bool		read_line(FILE* fp, SCChar* data );

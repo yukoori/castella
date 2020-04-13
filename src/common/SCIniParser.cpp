@@ -205,42 +205,23 @@ SCIniParser::set_value(const SCNodeComponent* key, const SCChar* value)
 {
 	SCString string_value = value;
 
-	SCNodeItem*	item = new SCNodeItem;
-	item->set_value(string_value);
+	if (key->size() > 0)
+	{
+		const_cast<SCNodeComponent*>(key->getChild(0))->set_value(string_value);
+	}
+	else
+	{
+		SCNodeItem* item = new SCNodeItem;
+		item->set_value(string_value);
 
-	const_cast<SCNodeComponent*>(key)->add(item);
+		const_cast<SCNodeComponent*>(key)->add(item);
+	}
 }
 
 void
 SCIniParser::print()
 {
-	print_child( _root );
-}
-
-void
-SCIniParser::print_child(const SCNodeComponent* pNode)
-{
-	if (pNode->get_type() == SCNodeComponent::T_SESSION)
-	{
-		SCPRINTF(SCTEXT("\n[%s]\n"), pNode->get_value().c_str());
-	}
-	else if (pNode->get_type() == SCNodeComponent::T_KEY)
-	{
-		SCPRINTF(SCTEXT("%s = "), pNode->get_value().c_str());
-	}
-	
-	for( int i=0; i<pNode->size(); ++i ) 
-	{
-		const SCNodeComponent* const pChild = pNode->getChild(i);
-		if (pChild->size() != 0)
-		{
-			print_child(pChild);
-		}	
-		else
-		{
-			SCPRINTF(SCTEXT("%s\n"), pChild->get_value().c_str());
-		}	
-	}
+	save_child( stderr, _root );
 }
 
 void
