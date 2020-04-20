@@ -58,11 +58,6 @@ void SCLogger::setLevel(ELogLevel logLevel)
 
 void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 {
-	if ((int)logLevel > (int)_logLevel)
-	{
-		return;
-	}
-
 	if (_format == NULL)
 	{
 		return;
@@ -77,6 +72,30 @@ void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 
 	va_end(argp);
 
+	print();
+}
+
+void SCLogger::hex(ELogLevel logLevel, const unsigned char* data, const int length)
+{
+	if (!isAvailable(logLevel))
+	{
+		return;
+	}
+
+	if (_format == NULL)
+	{
+		return;
+	}
+
+	SCMutexMgr mgr(_mutex);
+
+	_format->setRecord(logLevel, data, length);
+
+	print();
+}
+
+void SCLogger::print()
+{
 	std::vector<SCLogStream*>::iterator iter_s = _stream.begin();
 	std::vector<SCLogStream*>::iterator iter_e = _stream.end();
 	for (; iter_s != iter_e; ++iter_s)
@@ -89,4 +108,14 @@ void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 
 		stream->print(_format->data());
 	}
+}
+
+bool SCLogger::isAvailable(ELogLevel logLevel)
+{
+	if ((int)logLevel > (int)_logLevel)
+	{
+		return false;
+	}
+
+	return true;
 }

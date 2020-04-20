@@ -23,5 +23,10 @@ typedef enum
 		} while (0)
 #endif // defined(_WIN32) || defined(_WIN64)
 
+#define	SCHEXDUMP(OBJ, LEVEL, DATA, LENTH) \
+		do { \
+			OBJ.hex(LEVEL, DATA, LENTH); \
+		} while (0)
+
 #endif // !__SCLOGDEFINE_H
 

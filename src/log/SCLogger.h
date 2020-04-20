@@ -28,9 +28,14 @@ public:
 	void setFormatSpecifier(const SCLogFormat* format = new SCLogFormat, bool bFormatDelete = true);
 
 	void log(ELogLevel logLevel, const SCChar* format, ...);
+	void hex(ELogLevel logLevel, const unsigned char* data, const int length);
 	
 protected:
 private:
+	// 
+	void print();
+	bool isAvailable(ELogLevel logLevel);
+
 	// member values
 	std::vector<SCLogStream*>	_stream;
 	SCLogFormat*				_format;
