@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="CALL $(SolutionDir)..\GIT-VS-VERSION-GEN.bat &quot;.\&quot; &quot;$(SolutionDir)..\src\gen-versioninfo.h&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -76,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\."
+				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\."
 			/>
 		</Configuration>
 		<Configuration
@@ -106,6 +107,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="../../src/common;../../src/log;../../src/os"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -139,6 +141,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\."
 			/>
 		</Configuration>
 	</Configurations>
@@ -170,6 +173,14 @@
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -228,6 +239,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\src\version.h"
+				>
+			</File>
 			<Filter
 				Name="common"
 				>
