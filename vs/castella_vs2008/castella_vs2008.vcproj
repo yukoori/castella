@@ -21,11 +21,11 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="CALL $(SolutionDir)..\GIT-VS-VERSION-GEN.bat &quot;.\&quot; &quot;$(SolutionDir)..\src\gen-versioninfo.h&quot;"
+				CommandLine="CALL $(SolutionDir)GIT-VS-VERSION-GEN.bat &quot;$(IntDir)\&quot; &quot;$(SolutionDir)..\src\gen-versioninfo.h&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\."
+				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -85,11 +85,12 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="CALL $(SolutionDir)GIT-VS-VERSION-GEN.bat &quot;$(IntDir)\&quot; &quot;$(SolutionDir)..\src\gen-versioninfo.h&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -141,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\."
+				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

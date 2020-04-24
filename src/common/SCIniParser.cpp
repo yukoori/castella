@@ -14,8 +14,6 @@
 #define CHECK_BLANK_LINE(x) ((*x == '\n') || (*x == '\r') || (*x == '#')) ? true : false
 #define CHECK_BLANK(x) ((*x == ' ') || (*x == '\t')) ? true : false
 
-bool	bEnd = false;
-
 SCIniParser::SCIniParser()
 	: _root(NULL)
 {
@@ -49,13 +47,13 @@ SCIniParser::load(const SCChar* file)
 	}
 #endif // defined(_WIN32) || defined(_WIN64)
 		
-	bEnd = false;
+	bool bEnd = false;
 
 	SCNodeComponent* session_component = NULL;
 	SCNodeComponent* key_component	   = NULL;
 
 	SCChar	buffer[MAX_BUFFER] = {'\0',};
-	while( read_line(fp, buffer) )
+	while( read_line(fp, buffer, bEnd) )
 	{
 		if (STRLEN(buffer) == 0)		// no more data
 		{
@@ -251,7 +249,7 @@ SCIniParser::save_child(FILE* fp, const SCNodeComponent* pNode)
 }
 
 bool
-SCIniParser::read_line(FILE* fp, SCChar* data)
+SCIniParser::read_line(FILE* fp, SCChar* data, bool& bEnd)
 {
 	if (bEnd == true)
 	{

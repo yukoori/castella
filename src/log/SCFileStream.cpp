@@ -7,6 +7,8 @@
 
 SCFileStream::SCFileStream()
 	: _output(NULL)
+	, _path(SCTEXT(""))
+	, _component(SCTEXT(""))
 {
 
 }
@@ -67,9 +69,21 @@ void SCFileStream::print(const SCChar* record)
 	}
 }
 
-void SCFileStream::path(const SCChar* pPath)
+void SCFileStream::path(const SCChar* path)
 {
-	_path = pPath;
+	_path = path;
+
+	SCChar lastChar = _path.at(_path.size() - 1);
+	if (lastChar != '\\' && lastChar != '/')
+	{
+#if	defined(_WIN32) || defined(_WIN64)
+		_path += "\\";
+#else
+		_path += "/";
+#endif	// defined(_WIN32) || defined(_WIN64)
+	}
+
+	create_directory(_path.c_str());
 }
 
 const SCChar* SCFileStream::path() const
@@ -77,9 +91,9 @@ const SCChar* SCFileStream::path() const
 	return _path.c_str();
 }
 
-void SCFileStream::componet(const SCChar* pComponent)
+void SCFileStream::componet(const SCChar* component)
 {
-	_component = pComponent;
+	_component = component;
 }
 
 const SCChar* SCFileStream::componet() const
@@ -89,7 +103,7 @@ const SCChar* SCFileStream::componet() const
 
 const SCString SCFileStream::getFileName() const
 {
-	SCString fileName;
+	SCString fileName = SCTEXT("");
 
 	time_t	tCurrent = time(NULL);
 	struct tm tmCurrent;
@@ -117,4 +131,32 @@ const SCString SCFileStream::getFileName() const
 																tmCurrent.tm_mday);
 	fileName = logPath;
 	return fileName;
+}
+
+void SCFileStream::create_directory(const SCChar* path)
+{
+	if (SCACCESS(path, 0) != -1)
+	{
+		return ;
+	}
+
+	SCChar currentPath[256] = {'\0',};
+
+	SCChar* p = const_cast<SCChar*>(path);
+	SCChar* q = currentPath;
+	while( *p )
+	{
+		if( ('\\' == *p) || ('/' == *p) )
+		{
+			if ( ':' != *(p-1) )
+			{
+				SCMKDIR(currentPath);
+			}
+		}
+		*q++ = *p++;
+		*q = '\0';
+	}
+
+	SCMKDIR(currentPath);
+	return;
 }

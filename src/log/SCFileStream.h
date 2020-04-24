@@ -17,16 +17,20 @@ public:
 	virtual void print(const SCChar* record);
 
 	// setter & getter
-	void path(const SCChar* pPath);
+	void path(const SCChar* path);
 	const SCChar* path() const;
 
-	void componet(const SCChar* pComponent);
+	void componet(const SCChar* component);
 	const SCChar* componet() const;
 
 	const SCString getFileName() const;
 
 protected:
 private:
+	//
+	void create_directory(const SCChar* path);
+
+	// 
 	SCString	_path;
 	SCString	_component;
 

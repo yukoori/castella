@@ -7,6 +7,7 @@
 #endif // defined(_WIN32) || defined(_WIN64)
 
 SCLogFormat::SCLogFormat()
+	: _data(SCTEXT(""))
 {
 
 }
@@ -93,7 +94,7 @@ const SCChar* SCLogFormat::data() const
 
 const SCString SCLogFormat::getLevelPrefix(ELogLevel logLevel)
 {
-	SCString prefixLevel;
+	SCString prefixLevel = SCTEXT("");
 	switch (logLevel)
 	{
 	case SC_E_LOG_ERROR:

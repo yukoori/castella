@@ -71,7 +71,7 @@ private:
 	// member function
 	void		save_child(FILE* fp, const SCNodeComponent* node);
 
-	bool		read_line(FILE* fp, SCChar* data );
+	bool		read_line(FILE* fp, SCChar* data, bool& bEnd );
 
 	const SCNodeComponent*	set_session(const SCChar* value);
 	const SCNodeComponent*	set_key(const SCNodeComponent* session, const SCChar* value);

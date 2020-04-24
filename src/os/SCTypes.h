@@ -2,10 +2,18 @@
 #define	__SCTYPES_H
 
 #include <string>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <io.h>
+
 #if !defined(_WIN32) && !defined(_WIN64)
 #	include <string.h>
+#	include <dirent.h>
+#	include <unistd.h>
 #else
 #	include <windows.h>
+#	include <direct.h>
 #endif // !defined(_WIN32) && !defined(_WIN64)
 
 #ifdef UNICODE
@@ -20,33 +28,39 @@
 #	define	WIDEN(x)					SCTEXT(x)
 #	define	__SCFILE__					WIDEN(__FILE__)
 #	define	SCFPRINTF(p, f, ...)		fwprintf(p, f, __VA_ARGS__)
+#	define	STRLEN						wcslen
+#	define	SCMKDIR(d)					_wmkdir(d)
 #if defined(_WIN32) || defined(_WIN64)
+#	define	SCACCESS					_waccess_s
 #	define	STRNCPY						wcsncpy_s
 #else
+#	define	SCACCESS					waccess
 #	define	STRNCPY						wcsncpy
-#endif	// defined(_WIN32) || defined(_WIN64)
-#	define	STRLEN						wcslen
+#endif	/ / defined(_WIN32) || defined(_WIN64)
 #else
 #	define	SCChar						char
 #	define	SCString					std::string
 #	define	SCOFStream					std::ofstream
-#	define	SCSPRINTF(b, s, f, ...)		snprintf(b, s, f, __VA_ARGS__)
-#if defined(_WIN32) || defined(_WIN64)
-#	define	SCVSPRINTF					vsprintf_s
-#else
-#	define	SCVSPRINTF					vsprintf
-#endif	// defined(_WIN32) || defined(_WIN64)
 #	define	SCPRINTF					printf
 #	define	SCTEXT(x)					x
 #	define	WIDEN(x)					SCTEXT(x)
 #	define	__SCFILE__					__FILE__
 #	define	SCFPRINTF(p, f, ...)		fprintf(p, f, __VA_ARGS__)
-#if defined(_WIN32) || defined(_WIN64)
-#	define	STRNCPY						strncpy_s
-#else
-#	define	STRNCPY						strncpy
-#endif	// defined(_WIN32) || defined(_WIN64)
 #	define	STRLEN						strlen
+#if defined(_WIN32) || defined(_WIN64)
+#	define	SCVSPRINTF					vsprintf_s
+#	define	SCSPRINTF(b, s, f, ...)		sprintf_s(b, s, f, __VA_ARGS__)
+#	define	STRNCPY						strncpy_s
+#	define	SCMKDIR(d)					_mkdir(d)
+#	define	SCACCESS					_access
+#else
+#	define	SCVSPRINTF					vsprintf
+#	define	SCSPRINTF(b, s, f, ...)		snprintf(b, s, f, __VA_ARGS__)
+#	define	STRNCPY						strncpy
+#	define	SCMKDIR(d)					mkdir(d, 0755)
+#	define	SCSTAT						stat
+#	define	SCACCESS					access
+#endif	// defined(_WIN32) || defined(_WIN64)
 #endif // UNICODE
 
 extern const SCString TOSCChar(const char* data);
