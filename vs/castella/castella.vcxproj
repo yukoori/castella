@@ -157,6 +157,7 @@
     <ClInclude Include="..\..\src\common\SCAcceptor.h" />
     <ClInclude Include="..\..\src\common\SCEventHandler.h" />
     <ClInclude Include="..\..\src\common\SCIniParser.h" />
+    <ClInclude Include="..\..\src\common\SCMessageBlock.h" />
     <ClInclude Include="..\..\src\common\SCMutex.h" />
     <ClInclude Include="..\..\src\common\SCNode.h" />
     <ClInclude Include="..\..\src\common\SCNodeComponent.h" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\common\SCEventHandler.cpp" />
     <ClCompile Include="..\..\src\common\SCIniParser.cpp" />
+    <ClCompile Include="..\..\src\common\SCMessageBlock.cpp" />
     <ClCompile Include="..\..\src\common\SCNode.cpp" />
     <ClCompile Include="..\..\src\common\SCPThreadTask.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

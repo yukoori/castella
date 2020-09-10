@@ -5,15 +5,16 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <io.h>
 
 #if !defined(_WIN32) && !defined(_WIN64)
 #	include <string.h>
 #	include <dirent.h>
 #	include <unistd.h>
+#	include <sys/io.h>
 #else
 #	include <windows.h>
 #	include <direct.h>
+#	include <io.h>
 #endif // !defined(_WIN32) && !defined(_WIN64)
 
 #ifdef UNICODE

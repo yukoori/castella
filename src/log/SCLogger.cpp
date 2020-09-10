@@ -1,4 +1,5 @@
 #include "SCLogger.h"
+#include <iostream>
 
 SCLogger::SCLogger()
 	: _logLevel(SC_E_LOG_DEBUG)
@@ -96,6 +97,12 @@ void SCLogger::hex(ELogLevel logLevel, const unsigned char* data, const int leng
 
 void SCLogger::print()
 {
+	if (_stream.size() == 0)
+	{
+		std::cout << _format->data() << std::endl;
+		return;
+	}
+
 	std::vector<SCLogStream*>::iterator iter_s = _stream.begin();
 	std::vector<SCLogStream*>::iterator iter_e = _stream.end();
 	for (; iter_s != iter_e; ++iter_s)
@@ -108,6 +115,8 @@ void SCLogger::print()
 
 		stream->print(_format->data());
 	}
+
+	return;
 }
 
 bool SCLogger::isAvailable(ELogLevel logLevel)

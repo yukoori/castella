@@ -77,7 +77,7 @@ void SCFileStream::path(const SCChar* path)
 	if (lastChar != '\\' && lastChar != '/')
 	{
 #if	defined(_WIN32) || defined(_WIN64)
-		_path += "\\";
+		_path += SCTEXT("\\");
 #else
 		_path += "/";
 #endif	// defined(_WIN32) || defined(_WIN64)
