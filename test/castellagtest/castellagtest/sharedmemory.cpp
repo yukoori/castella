@@ -13,7 +13,7 @@ TEST(SCSharedMemory, TestSCSharedMemory)
 	ASSERT_EQ(memory.open("test_shared_memory", sizeof(shared_data) * 10), 0);
 
 	shared_data* pData = (shared_data*) memory.malloc();
-//	ASSERT_NE(pData, 0);
+	ASSERT_FALSE(pData == NULL);
 
 	strcpy_s(pData->name, "name1");
 	strcpy_s(pData->address, "address1");
@@ -24,7 +24,7 @@ TEST(SCSharedMemory, TestSCSharedMemory)
 	ASSERT_EQ(memory1.open("test_shared_memory", sizeof(shared_data) * 10), 0);
 
 	shared_data* pData1 = (shared_data*)memory1.malloc();
-//	ASSERT_NE(pData1, 0);
+	ASSERT_FALSE(pData1 == NULL);
 
 	ASSERT_STREQ(pData1->name, "name1");
 	ASSERT_STREQ(pData1->address, "address1");
