@@ -92,12 +92,28 @@ TEST(SCMessageBlock, TestSCMessageBlock)
     2. 데이터를 연결 할 수 있다.
     3. 데이터를 일부만 획득 할 수 있다.
     4. 메모리를 매번 할당 하지 않는다.
+    5. 메시지 타입 설정 기능 제공
 
     */
 
     // 1
     SCMessageBlock block;
-    block.set(testdata, sizeof(testdata));
+    block.copy(testdata, sizeof(testdata));
 
     ASSERT_EQ(memcmp(testdata, block.rd_ptr(), block.length()), 0);
+
+    // 메시지 타입 설정 가능
+    block.msg_type(SCMessageBlock::MB_DATA);
+    ASSERT_EQ(block.msg_type(), 0);
+
+    // 메시지 블록 연결
+    SCMessageBlock block2;
+    block2.copy("second");
+
+    block.cont(&block2);
+
+    ASSERT_EQ(block.cont()->rd_ptr(), block2.rd_ptr());
+
+    // 블록 해제 인터페이스 필요.
+    block.release();
 }

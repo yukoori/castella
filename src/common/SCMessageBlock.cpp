@@ -3,7 +3,8 @@
 #define	BLOCK_SIZE	2048
 
 SCMessageBlock::SCMessageBlock()
-	: _data(NULL)
+	: _msg_type(MB_DATA)
+	, _data(NULL)
 	, _size(0)
 	, _rd_ptr(0)
 	, _wr_ptr(0)
@@ -12,10 +13,16 @@ SCMessageBlock::SCMessageBlock()
 }
 
 SCMessageBlock::SCMessageBlock(const char* data)
-	: _rd_ptr(0)
+	: _msg_type(MB_DATA)
+	, _rd_ptr(0)
 	, _wr_ptr(0)
 {
-	set(data);
+	copy(data);
+}
+
+SCMessageBlock::SCMessageBlock(const SCMessageBlock& o)
+{
+	assign(o);
 }
 
 SCMessageBlock::~SCMessageBlock()
@@ -23,7 +30,13 @@ SCMessageBlock::~SCMessageBlock()
 
 }
 
-void SCMessageBlock::set(const char* data)
+SCMessageBlock& SCMessageBlock::operator=(const SCMessageBlock& o)
+{
+	assign(o);
+	return (*this);
+}
+
+void SCMessageBlock::copy(const char* data)
 {
 	const size_t data_length = strlen(data);
 	resize(data_length);
@@ -34,7 +47,7 @@ void SCMessageBlock::set(const char* data)
 	return;
 }
 
-void SCMessageBlock::set(const unsigned char* data, const size_t length)
+void SCMessageBlock::copy(const unsigned char* data, const size_t length)
 {
 	resize(length);
 
@@ -44,22 +57,42 @@ void SCMessageBlock::set(const unsigned char* data, const size_t length)
 	return;
 }
 
+void SCMessageBlock::msg_type(int type)
+{
+	if (type < MB_DATA)
+	{
+		_msg_type = MB_DATA;
+	}
+
+	_msg_type = type;
+}
+
+int SCMessageBlock::msg_type() const
+{
+	return _msg_type;
+}
+
 const size_t SCMessageBlock::length() const
 {
 	return _wr_ptr - _rd_ptr;
 }
 
-const char* SCMessageBlock::get() const
+const size_t SCMessageBlock::size() const
+{
+	return _size;
+}
+
+const char* SCMessageBlock::base() const
 {
 	return (char*)_data;
 }
 
-const char* SCMessageBlock::rd_ptr() const
+char* SCMessageBlock::rd_ptr() const
 {
 	return (char*)(_data + _rd_ptr);
 }
 
-const char* SCMessageBlock::wr_ptr() const
+char* SCMessageBlock::wr_ptr() const
 {
 	return (char*)(_data + _wr_ptr);
 }
@@ -72,6 +105,37 @@ void SCMessageBlock::rd_ptr(const size_t pos)
 void SCMessageBlock::wr_ptr(const size_t pos)
 {
 	_wr_ptr += pos;
+}
+
+void SCMessageBlock::release()
+{
+	// reset data, without free
+	if (_data)
+	{
+		memset(_data, 0x00, _size);
+	}
+
+	_rd_ptr = 0;
+	_wr_ptr = 0;
+}
+
+SCMessageBlock* SCMessageBlock::cont() const
+{
+	return _cont;
+}
+
+void SCMessageBlock::cont(SCMessageBlock* mb)
+{
+	_cont = mb;
+}
+
+void SCMessageBlock::assign(const SCMessageBlock& o)
+{
+	this->_msg_type = o._msg_type;
+	this->copy((unsigned char*)o.base(), o.size());
+
+	this->_rd_ptr = o._rd_ptr;
+	this->_wr_ptr = o._wr_ptr;
 }
 
 bool SCMessageBlock::resize(size_t need)
