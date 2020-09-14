@@ -163,6 +163,7 @@
     <ClInclude Include="..\..\src\common\SCNodeComponent.h" />
     <ClInclude Include="..\..\src\common\SCNodeItem.h" />
     <ClInclude Include="..\..\src\common\SCSelectReactor.h" />
+    <ClInclude Include="..\..\src\common\SCSharedMemory.h" />
     <ClInclude Include="..\..\src\common\SCSocketHandler.h" />
     <ClInclude Include="..\..\src\common\SCTask.h" />
     <ClInclude Include="..\..\src\log\SCLogDefine.h" />
@@ -187,6 +188,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\src\common\SCSelectReactor.cpp" />
+    <ClCompile Include="..\..\src\common\SCSharedMemory.cpp" />
     <ClCompile Include="..\..\src\common\SCSocketHandler.cpp" />
     <ClCompile Include="..\..\src\common\SCWindowsTask.cpp" />
     <ClCompile Include="..\..\src\log\SCLogFormat.cpp" />

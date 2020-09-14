@@ -144,7 +144,7 @@ void SCSelectReactor::set_sockethandle(fd_set& fdset, int& maxfd)
 	{
 		if (iter_s->first != SC_SOCKET_INVALID)
 		{
-			if (maxfd < iter_s->first)
+			if (maxfd < (int)iter_s->first)
 			{
 				maxfd = (int)iter_s->first;
 			}

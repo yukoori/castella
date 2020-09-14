@@ -8,6 +8,7 @@ SCMessageBlock::SCMessageBlock()
 	, _size(0)
 	, _rd_ptr(0)
 	, _wr_ptr(0)
+	, _cont(NULL)
 {
 
 }
@@ -16,6 +17,7 @@ SCMessageBlock::SCMessageBlock(const char* data)
 	: _msg_type(MB_DATA)
 	, _rd_ptr(0)
 	, _wr_ptr(0)
+	, _cont(NULL)
 {
 	copy(data);
 }
