@@ -1,20 +1,26 @@
 #ifndef __SCSHAREDMEMORY_H
 #define	__SCSHAREDMEMORY_H
 
+#include "SCTypes.h"
+
 #if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 class SCSharedMemoryWIndows
 {
 public:
 	SCSharedMemoryWIndows();
 	~SCSharedMemoryWIndows();
 
-	int open(const char* key, size_t size);
+	int open(const SCChar* key, size_t size);
 	void close();
 
 	void* malloc();
 
 private:
+	HANDLE	_map_file;
+	size_t	_max_size;
 
+	void*	_base_addr;
 };
 #else
 class SCSharedMemoryPosix
@@ -23,13 +29,16 @@ public:
 	SCSharedMemoryPosix();
 	~SCSharedMemoryPosix();
 
-	int open(const char* key, size_t size);
+	int open(const SCChar* key, size_t size);
 	void close();
 
 	void* malloc();
 
 private:
+	int		_id;
+	int		_max_size;
 
+	void*	_base_addr;
 };
 #endif // defined(_WIN32) || defined(_WIN64)
 
@@ -39,7 +48,7 @@ public:
 	SCSharedMemory();
 	~SCSharedMemory();
 
-	int open(const char* key, size_t size);
+	int open(const SCChar* key, size_t size);
 	void close();
 
 	void* malloc();
