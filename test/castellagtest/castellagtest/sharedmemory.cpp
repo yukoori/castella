@@ -10,7 +10,7 @@ struct shared_data {
 TEST(SCSharedMemory, TestSCSharedMemory)
 {
 	SCSharedMemory memory;
-	ASSERT_EQ(memory.open("test_shared_memory", sizeof(shared_data) * 10), 0);
+	ASSERT_EQ(memory.open(SCTEXT("test_shared_memory"), sizeof(shared_data) * 10), 0);
 
 	shared_data* pData = (shared_data*) memory.malloc();
 	ASSERT_FALSE(pData == NULL);
@@ -21,7 +21,7 @@ TEST(SCSharedMemory, TestSCSharedMemory)
 	memory.close();
 
 	SCSharedMemory memory1;
-	ASSERT_EQ(memory1.open("test_shared_memory", sizeof(shared_data) * 10), 0);
+	ASSERT_EQ(memory1.open(SCTEXT("test_shared_memory"), sizeof(shared_data) * 10), 0);
 
 	shared_data* pData1 = (shared_data*)memory1.malloc();
 	ASSERT_FALSE(pData1 == NULL);

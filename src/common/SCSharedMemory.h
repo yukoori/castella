@@ -17,6 +17,7 @@ public:
 	void* malloc();
 
 private:
+	HANDLE	_file;
 	HANDLE	_map_file;
 	size_t	_max_size;
 

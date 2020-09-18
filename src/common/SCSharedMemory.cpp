@@ -2,7 +2,8 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 SCSharedMemoryWIndows::SCSharedMemoryWIndows()
-	: _map_file(INVALID_HANDLE_VALUE)
+	: _file(INVALID_HANDLE_VALUE)
+	, _map_file(INVALID_HANDLE_VALUE)
 	, _max_size(0)
 	, _base_addr(NULL)
 {
@@ -22,14 +23,14 @@ int SCSharedMemoryWIndows::open(const SCChar* key, size_t size)
 
 	_max_size = size;
 
-	_map_file = OpenFileMapping( FILE_MAP_ALL_ACCESS, FALSE, key);
-	if (_map_file != NULL)
+	_file = CreateFile(key, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (_file == NULL)
 	{
-		// 이미 생성되어 있으므로 종료
-		return 0;
+		// 오류가 발생하였으므로 실패처리
+		return -1;
 	}
 
-	_map_file = CreateFileMapping( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, _max_size, key);
+	_map_file = CreateFileMapping(_file, NULL, PAGE_READWRITE, 0, _max_size, NULL);
 	if (_map_file == NULL)
 	{
 		return -1;
@@ -51,6 +52,12 @@ void SCSharedMemoryWIndows::close()
 		CloseHandle(_map_file);
 	}
 	_map_file = INVALID_HANDLE_VALUE;
+
+	if (_file != INVALID_HANDLE_VALUE)
+	{
+		CloseHandle(_file);
+	}
+	_file = INVALID_HANDLE_VALUE;
 
 	return;
 }
