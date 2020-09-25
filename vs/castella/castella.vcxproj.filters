@@ -37,6 +37,12 @@
     <Filter Include="Source Files\os">
       <UniqueIdentifier>{67cf5c20-7ef9-47ae-a296-d39a77a133aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\net">
+      <UniqueIdentifier>{2b747710-732c-4221-b767-08f75aa4e48b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net">
+      <UniqueIdentifier>{8ad529f2-a515-4efc-8b82-35cc676c6d3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\SCTask.h">
@@ -60,9 +66,6 @@
     <ClInclude Include="..\..\src\common\SCMutex.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\SCAcceptor.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\os\SCSocket.h">
       <Filter>Header Files\os</Filter>
     </ClInclude>
@@ -75,13 +78,7 @@
     <ClInclude Include="..\..\src\os\SCOS.h">
       <Filter>Header Files\os</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\SCSocketHandler.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\SCEventHandler.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\common\SCSelectReactor.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\common\SCIniParser.h">
@@ -102,6 +99,18 @@
     <ClInclude Include="..\..\src\common\SCSharedMemory.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\net\SCSocketConnector.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\net\SCAcceptor.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\net\SCSelectReactor.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\net\SCSocketHandler.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\SCPThreadTask.cpp">
@@ -119,9 +128,6 @@
     <ClCompile Include="..\..\src\log\SCFileStream.cpp">
       <Filter>Source Files\log</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\common\SCSocketHandler.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\os\SCOS.cpp">
       <Filter>Source Files\os</Filter>
     </ClCompile>
@@ -129,9 +135,6 @@
       <Filter>Source Files\os</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\SCEventHandler.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\common\SCSelectReactor.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\os\SCString.cpp">
@@ -148,6 +151,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\SCSharedMemory.cpp">
       <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\SCSocketConnector.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\SCSocketHandler.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\SCSelectReactor.cpp">
+      <Filter>Source Files\net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

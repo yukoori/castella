@@ -76,7 +76,7 @@ int SCAcceptor<T>::Open()
 	}
 
 	// socket을 생성한다.
-	_socket = socket(PF_INET, SOCK_STREAM, 0);
+	_socket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(_socket == SC_SOCKET_INVALID )
 	{
 		return SC_SOCKET_LASTERR;
@@ -116,8 +116,8 @@ int SCAcceptor<T>::Open()
 template<class T>
 void SCAcceptor<T>::Close()
 {
-	SC_CLEANUP();
 	SC_SOCKET_CLOSE(_socket);
+	SC_CLEANUP();
 }
 
 template<class T>
