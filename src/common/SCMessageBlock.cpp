@@ -1,5 +1,7 @@
 #include "SCMessageBlock.h"
 
+#include <cstring>
+
 #define	BLOCK_SIZE	2048
 
 SCMessageBlock::SCMessageBlock()

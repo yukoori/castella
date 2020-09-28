@@ -79,6 +79,10 @@ void* SCSharedMemoryWIndows::malloc()
 }
 
 #else
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <climits>
+
 SCSharedMemoryPosix::SCSharedMemoryPosix()
 	: _id(-1)
 	, _max_size(0)
@@ -101,7 +105,13 @@ int SCSharedMemoryPosix::open(const SCChar* key, size_t size)
 
 	_max_size = size;
 
-	_id = shmget(key, _max_size, IPC_CREATE|0664);
+	key_t key_value = atoi(key);
+	if (key_value < 0 || key_value > INT_MAX)
+	{
+		return -1;
+	}
+
+	_id = shmget(key_value, _max_size, IPC_CREAT|0664);
 	if (_id == -1)
 	{
 		return -1;
@@ -120,7 +130,7 @@ void SCSharedMemoryPosix::close()
 
 	if (_id != -1)
 	{
-		close(_id);
+		::close(_id);
 	}
 	_id = -1;
 
@@ -135,7 +145,7 @@ void* SCSharedMemoryPosix::malloc()
 	}
 
 	_base_addr = shmat(_id, NULL, 0);
-	if (_base_addr == -1)
+	if (_base_addr == NULL)
 	{
 		_base_addr = NULL;
 	}

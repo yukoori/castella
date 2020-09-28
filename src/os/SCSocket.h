@@ -52,7 +52,7 @@
 #	define		SC_SOCKET_READ(a, b, c, d)		read(a, b, c)
 #	define		SC_SOCKET_LASTERR				errno
 #	define		SC_SOCKET_SET_LASTERR(err)		errno = err
-#	define		SC_SOCKET_CLOSE					close
+#	define		SC_SOCKET_CLOSE					::close
 #	define		SC_CLEANUP()
 extern	int		errno;
 #	define		MAX_SOCKET_COUNT				5

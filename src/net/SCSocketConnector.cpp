@@ -1,5 +1,9 @@
 #include "SCSocketConnector.h"
 
+#ifndef WIN32
+#	include <fcntl.h>
+#endif
+
 SCSocketConnector::SCSocketConnector()
 	: _socket(SC_SOCKET_INVALID)
 	, _conn_timeout(0)
@@ -101,7 +105,7 @@ int SCSocketConnector::open(const SCChar* ip, int port)
 		if (!FD_ISSET(_socket, &rset) && !FD_ISSET(_socket, &wset))
 		{
 			set_block();
-			return ERROR_NOT_CONNECTED;
+			return -1;
 		}
 
 		int err = 0;
@@ -198,7 +202,7 @@ int SCSocketConnector::recv_data(const unsigned char* recv_buffer, int buffer_le
 
 	while (nTotal < buffer_len)
 	{
-		int nRecv = recv(_socket, (char*)pBuf, nBuf, 0);
+		int nRecv = SC_SOCKET_READ(_socket, (char*)pBuf, nBuf, 0);
 		if (nRecv <= 0)
 		{
 			int lasterr = SC_SOCKET_LASTERR;
@@ -279,7 +283,7 @@ void SCSocketConnector::set_nonblock()
 	flags = ioctlsocket(_socket, FIONBIO, &lflags);
 #else
 	flags = fcntl(_socket, F_GETFL, 0);
-	fcntl(m_hSocket, F_SETFL, flags | O_NONBLOCK);
+	fcntl(_socket, F_SETFL, flags | O_NONBLOCK);
 #endif
 
 	return;
@@ -293,7 +297,7 @@ void SCSocketConnector::set_block()
 	flags = ioctlsocket(_socket, FIONBIO, &lflags);
 #else
 	flags = fcntl(_socket, F_GETFL, 0);
-	fcntl(m_hSocket, F_SETFL, flags & 0x7f);
+	fcntl(_socket, F_SETFL, flags & 0x7f);
 #endif
 
 	return;

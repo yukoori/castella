@@ -5,19 +5,23 @@ include ./makefile.local
 OUTDIR	= ../lib
 TARGET	= libcastella.$(PREFIX_A)
 
-FILES	= ./common/SCEventHandler.cpp \
-		./common/SCPThreadTask.cpp \
-		./common/SCSelectReactor.cpp \
-		./common/SCSocketHandler.cpp \
+FILES	= \
+		./common/SCEventHandler.cpp \
 		./common/SCIniParser.cpp \
+		./common/SCMessageBlock.cpp \
 		./common/SCNode.cpp \
+		./common/SCPThreadTask.cpp \
+		./common/SCSharedMemory.cpp \
 		./log/SCFileStream.cpp \
 		./log/SCLogFormat.cpp \
 		./log/SCLogger.cpp \
+		./net/SCSelectReactor.cpp \
+		./net/SCSocketConnector.cpp \
+		./net/SCSocketHandler.cpp \
 		./os/SCOS.cpp \
 		./os/SCString.cpp \
 		./os/SCThread.cpp
-		
+
 SRCS	= $(FILES)
 OBJS 	= $(SRCS:.cpp=.o)
 

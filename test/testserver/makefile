@@ -10,7 +10,7 @@ FILES	= ./ServerHandler.cpp \
 SRCS	= $(FILES)
 OBJS 	= $(SRCS:.cpp=.o)
 
-INCLDIRS	+= -I../../src/common -I../../src/log -I../../src/os
+INCLDIRS	+= -I../../src/common -I../../src/log -I../../src/os -I../../src/net
 LIBS		+= -L../../lib -lcastella \
 			-lpthread
 
