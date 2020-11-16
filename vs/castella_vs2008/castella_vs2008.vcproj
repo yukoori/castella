@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../src/common;../../src/log;../../src/os"
+				AdditionalIncludeDirectories="../../src/common;../../src/log;../../src/os;../../src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;..\..\include&quot; mkdir &quot;..\..\include&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib&quot; mkdir &quot;..\..\lib&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib\$(ConfigurationName)&quot; mkdir &quot;..\..\lib\$(ConfigurationName)&quot;&#x0D;&#x0A;copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\net\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\*.h ..\..\include\.&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -108,7 +108,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../../src/common;../../src/log;../../src/os"
+				AdditionalIncludeDirectories="../../src/common;../../src/log;../../src/os;../../src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;..\..\include&quot; mkdir &quot;..\..\include&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib&quot; mkdir &quot;..\..\lib&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib\$(ConfigurationName)&quot; mkdir &quot;..\..\lib\$(ConfigurationName)&quot;&#x0D;&#x0A;copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\net\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\*.h ..\..\include\."
 			/>
 		</Configuration>
 	</Configurations>
@@ -163,6 +163,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\common\SCIniParser.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\common\SCMessageBlock.cpp"
 					>
 				</File>
 				<File
@@ -190,11 +194,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\..\src\common\SCSelectReactor.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\common\SCSocketHandler.cpp"
+					RelativePath="..\..\src\common\SCSharedMemory.cpp"
 					>
 				</File>
 				<File
@@ -234,6 +234,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="net"
+				>
+				<File
+					RelativePath="..\..\src\net\SCSelectReactor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\net\SCSocketConnector.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\net\SCSocketHandler.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -248,15 +264,15 @@
 				Name="common"
 				>
 				<File
-					RelativePath="..\..\src\common\SCAcceptor.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\common\SCEventHandler.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\common\SCIniParser.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\common\SCMessageBlock.h"
 					>
 				</File>
 				<File
@@ -280,11 +296,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\common\SCSelectReactor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\common\SCSocketHandler.h"
+					RelativePath="..\..\src\common\SCSharedMemory.h"
 					>
 				</File>
 				<File
@@ -337,6 +349,26 @@
 				</File>
 				<File
 					RelativePath="..\..\src\os\SCTypes.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="net"
+				>
+				<File
+					RelativePath="..\..\src\net\SCAcceptor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\net\SCSelectReactor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\net\SCSocketConnector.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\net\SCSocketHandler.h"
 					>
 				</File>
 			</Filter>

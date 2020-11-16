@@ -7,7 +7,7 @@ AR 		= ar
 ARFLAGS = qv
 
 # 기본 옵션 설정
-DEFS = -DUSE_PTHREAD
+DEFS = 
 
 CFLAGS = -m64 -fPIC -ggdb -std=c++0x -Wno-write-strings -Wno-strict-aliasing
 SH_CFLAGS =
