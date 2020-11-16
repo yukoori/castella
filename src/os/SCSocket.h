@@ -1,6 +1,8 @@
 #ifndef __SCSOCKET_H
 #define __SCSOCKET_H
 
+#include "config.h"
+
 #if	defined(_WIN32) || defined(_WIN64)
 #	include		<windows.h>
 #	define		SC_STARTUP(a, b)				WSAStartup(a, b)

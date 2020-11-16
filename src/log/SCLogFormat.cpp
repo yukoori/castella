@@ -137,7 +137,7 @@ const SCString SCLogFormat::getTimePrefix()
 	}
 #else
 	struct tm* result = localtime_r(&tCurrent, &tmCurrent);
-	if (result == NULL)
+	if (result != NULL)
 	{
 		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d] "), tmCurrent.tm_year + 1900,
 			tmCurrent.tm_mon + 1,
@@ -154,7 +154,7 @@ const SCString SCLogFormat::getTimePrefix()
 const SCString SCLogFormat::getThreadPrefix()
 {
 	SCChar prefixThread[32] = { '\0', };
-	SCSPRINTF(prefixThread, 32, SCTEXT("[%d|%d] "), SCThread::pid(), SCThread::tid());
+	SCSPRINTF(prefixThread, 32, SCTEXT("[%d|%lu] "), SCThread::pid(), SCThread::tid());
 
 	return SCString(prefixThread);
 }

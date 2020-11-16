@@ -1,6 +1,8 @@
 #ifndef __SCWINDOWSTASK_H
 #define	__SCWINDOWSTASK_H
 
+#include "config.h"
+
 #include <windows.h>
 
 class SCWindowsTask

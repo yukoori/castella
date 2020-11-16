@@ -1,6 +1,8 @@
 #ifndef __SCTHREAD_H
 #define __SCTHREAD_H
 
+#include "config.h"
+
 #if defined(USE_PTHREAD)
 #	include <pthread.h>
 #	include <sys/types.h>

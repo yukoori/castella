@@ -1,6 +1,8 @@
 #ifndef __SCTASK_H
 #define	__SCTASK_H
 
+#include "config.h"
+
 #if defined(_WIN32) || defined(WIN64)
 #include <windows.h>
 

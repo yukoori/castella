@@ -1,6 +1,8 @@
 #ifndef __SCMESSAGEBLOCK_H
 #define __SCMESSAGEBLOCK_H
 
+#include "config.h"
+
 #include <string>
 
 class SCMessageBlock

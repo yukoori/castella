@@ -1,6 +1,8 @@
 #ifndef __SCEVENTHANDLER_H
 #define __SCEVENTHANDLER_H
 
+#include "config.h"
+
 class SCEventHandler
 {
 public:

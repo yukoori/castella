@@ -72,7 +72,7 @@ void* SCSharedMemoryWIndows::malloc()
 	_base_addr = MapViewOfFile(_map_file, FILE_MAP_ALL_ACCESS, 0, 0, _max_size);
 	if (_base_addr == NULL)
 	{
-		return nullptr;
+		return NULL;
 	}
 
 	return _base_addr;

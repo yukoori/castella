@@ -127,13 +127,13 @@ int SCAcceptor<T>::accept_loop()
 	{
 		struct sockaddr_in client_addr;
 		SC_SOCKET_ADDR_LEN client_addr_len = sizeof(client_addr);
-#ifdef	WIN32
+#if	defined(_WIN32) || defined(_WIN64)
 		SC_SOCKET_HANDLE client = accept(_socket, reinterpret_cast<struct sockaddr *>(&client_addr), reinterpret_cast<int*>(&client_addr_len));
 #elif	__HP__
 		SC_SOCKET_HANDLE client = accept(_socket, (struct sockaddr *)&client_addr, (int*)&client_addr_len);
 #else
 		SC_SOCKET_HANDLE client = accept(_socket, (struct sockaddr *)&client_addr, &client_addr_len);
-#endif	// WIN32
+#endif	// defined(_WIN32) || defined(_WIN64)
 		if(client == SC_SOCKET_INVALID)
 		{
 			SC_SOCKET_CLOSE(client);
@@ -142,13 +142,13 @@ int SCAcceptor<T>::accept_loop()
 
 		struct	sockaddr_in peer_addr;
 		SC_SOCKET_ADDR_LEN peer_addr_len = sizeof(peer_addr);
-#ifdef	WIN32
+#if	defined(_WIN32) || defined(_WIN64)
 		::getpeername(client, reinterpret_cast<struct sockaddr *>(&peer_addr), &peer_addr_len);
 #elif	__HP__
 		getpeername(client, (struct sockaddr *)&peer_addr, &peer_addr_len);
 #else
 		getpeername(client, (struct sockaddr *)&peer_addr, (socklen_t *)&peer_addr_len);
-#endif	// WIN32
+#endif	// defined(_WIN32) || defined(_WIN64)
 		
 		T* handler = make_handler();
 		handler->socket(client);

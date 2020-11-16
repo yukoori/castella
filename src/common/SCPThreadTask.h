@@ -1,6 +1,8 @@
 #ifndef __SCPTHREADTASK_H
 #define	__SCPTHREADTASK_H
 
+#include "config.h"
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>

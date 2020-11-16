@@ -1,6 +1,8 @@
 #ifndef __SCTYPES_H
 #define	__SCTYPES_H
 
+#include "config.h"
+
 #include <string>
 #include <errno.h>
 #include <sys/types.h>
