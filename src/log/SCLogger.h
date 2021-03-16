@@ -16,11 +16,11 @@ public:
 	SCLogger();
 	~SCLogger();
 
-	//
-	friend const SCLogger& operator<<(const SCLogger& in, const SCChar* pszData);
-	friend const SCLogger& operator<<(const SCLogger& in, SCString strData);
-	friend const SCLogger& operator<<(const SCLogger& in, int n);
-	friend const SCLogger& operator<<(const SCLogger& in, double d);
+// 	//
+// 	friend const SCLogger& operator<<(const SCLogger& in, const SCChar* pszData);
+// 	friend const SCLogger& operator<<(const SCLogger& in, SCString strData);
+// 	friend const SCLogger& operator<<(const SCLogger& in, int n);
+// 	friend const SCLogger& operator<<(const SCLogger& in, double d);
 
 	// functions
 	void setLevel(ELogLevel logLevel);
@@ -45,6 +45,6 @@ private:
 	SCMutex						_mutex;
 };
 
-#include "SCLogger.inl"
+// #include "SCLogger.inl"
 
 #endif // !__SCLOGGER_H

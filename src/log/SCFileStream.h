@@ -29,6 +29,7 @@ protected:
 private:
 	//
 	void create_directory(const SCChar* path);
+	bool exist(const SCChar* path);
 
 	// 
 	SCString	_path;

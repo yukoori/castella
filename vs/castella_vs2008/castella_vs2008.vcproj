@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="if not exist &quot;..\..\include&quot; mkdir &quot;..\..\include&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib&quot; mkdir &quot;..\..\lib&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib\$(ConfigurationName)&quot; mkdir &quot;..\..\lib\$(ConfigurationName)&quot;&#x0D;&#x0A;copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\net\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\*.h ..\..\include\."
+				CommandLine="if not exist &quot;..\..\include&quot; mkdir &quot;..\..\include&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib&quot; mkdir &quot;..\..\lib&quot;&#x0D;&#x0A;if not exist &quot;..\..\lib\$(ConfigurationName)&quot; mkdir &quot;..\..\lib\$(ConfigurationName)&quot;&#x0D;&#x0A;copy $(SolutionDir)$(ConfigurationName)\$(ProjectName).lib ..\..\lib\$(ConfigurationName)\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\common\*.inl ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\log\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\os\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\net\*.h ..\..\include\.&#x0D;&#x0A;copy $(SolutionDir)..\src\*.h ..\..\include\.&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

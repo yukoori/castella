@@ -21,15 +21,20 @@ SCFileStream::~SCFileStream()
 
 int SCFileStream::open()
 {
-	if (this->isOpen())
-	{
-		return 0;
-	}
-
 	SCString logPath = this->getFileName();
 	if (logPath.length() == 0)
 	{
 		return -1;
+	}
+
+	if (!exist(logPath.c_str()))
+	{
+		close();
+	}
+
+	if (this->isOpen())
+	{
+		return 0;
 	}
 
 	_output = new SCOFStream();
@@ -57,6 +62,7 @@ int SCFileStream::close()
 		_output->close();
 	}
 
+	_open = false;
 	return 0;
 }
 
@@ -159,4 +165,18 @@ void SCFileStream::create_directory(const SCChar* path)
 
 	SCMKDIR(currentPath);
 	return;
+}
+
+bool SCFileStream::exist(const SCChar* path)
+{
+#if defined(_WIN32) || defined(_WIN64)
+	if (0 == _access(path, 0))
+#else
+	if (0 == access(path, 0))
+#endif	// defined(_WIN32) || defined(_WIN64)
+	{
+		return true;
+	}
+
+	return false;
 }

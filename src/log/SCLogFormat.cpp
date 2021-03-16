@@ -22,7 +22,7 @@ void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list ar
 	// 
 
 	SCChar buffer[2048] = { '\0', };
-	SCVSPRINTF(buffer, format, argp);
+	SCVSPRINTF(buffer, sizeof(buffer), format, argp);
 
 	_data  = getLevelPrefix(logLevel);
 	_data += getTimePrefix();

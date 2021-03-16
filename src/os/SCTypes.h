@@ -17,6 +17,7 @@
 #	include <windows.h>
 #	include <direct.h>
 #	include <io.h>
+#	include <strsafe.h>
 #endif // !defined(_WIN32) && !defined(_WIN64)
 
 #ifdef UNICODE
@@ -25,7 +26,7 @@
 #	define	SCString					std::wstring
 #	define	SCOFStream					std::wofstream
 #	define	SCSPRINTF(b, s, f, ...)		wsprintf(b, f, __VA_ARGS__)
-#	define	SCVSPRINTF					wvsprintf
+#	define	SCVSPRINTF					StringCchVPrintf
 #	define	SCPRINTF					wprintf
 #	define	SCTEXT(x)					L ## x
 #	define	WIDEN(x)					SCTEXT(x)
@@ -51,13 +52,13 @@
 #	define	SCFPRINTF(p, f, ...)		fprintf(p, f, __VA_ARGS__)
 #	define	STRLEN						strlen
 #if defined(_WIN32) || defined(_WIN64)
-#	define	SCVSPRINTF					vsprintf_s
+#	define	SCVSPRINTF					StringCchVPrintf // vsprintf_s
 #	define	SCSPRINTF(b, s, f, ...)		sprintf_s(b, s, f, __VA_ARGS__)
 #	define	STRNCPY						strncpy_s
 #	define	SCMKDIR(d)					_mkdir(d)
 #	define	SCACCESS					_access
 #else
-#	define	SCVSPRINTF					vsprintf
+#	define	SCVSPRINTF					vsnprintf
 #	define	SCSPRINTF(b, s, f, ...)		snprintf(b, s, f, __VA_ARGS__)
 #	define	STRNCPY						strncpy
 #	define	SCMKDIR(d)					mkdir(d, 0755)

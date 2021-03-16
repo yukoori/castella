@@ -25,7 +25,7 @@ FILES	= \
 SRCS	= $(FILES)
 OBJS 	= $(SRCS:.cpp=.o)
 
-INCLDIRS	+= -I./common -I./log -I./os
+INCLDIRS	+= -I./common -I./log -I./os -I.
 
 .SUFFIXES : .cpp .o
 .cpp.o:

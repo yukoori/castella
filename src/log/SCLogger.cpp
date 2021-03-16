@@ -108,11 +108,7 @@ void SCLogger::print()
 	for (; iter_s != iter_e; ++iter_s)
 	{
 		SCLogStream* stream = (*iter_s);
-		if (!stream->isOpen())
-		{
-			stream->open();
-		}
-
+		stream->open();
 		stream->print(_format->data());
 	}
 
