@@ -52,8 +52,11 @@ int SCFileStream::open()
 
 int SCFileStream::close()
 {
-	if (_output == NULL)
+	if (!this->isOpen())
 	{
+		// _output에 대한 체크를 하였으나,
+		// windows debug버전에서 유효하지 않은 값으로 설정되어 있음.
+		// 분명히 NULL로 초기화했는데..뭐지???
 		return 0;
 	}
 
