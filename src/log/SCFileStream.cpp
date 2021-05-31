@@ -172,11 +172,7 @@ void SCFileStream::create_directory(const SCChar* path)
 
 bool SCFileStream::exist(const SCChar* path)
 {
-#if defined(_WIN32) || defined(_WIN64)
-	if (0 == _access(path, 0))
-#else
-	if (0 == access(path, 0))
-#endif	// defined(_WIN32) || defined(_WIN64)
+	if (0 == SCACCESS(path, 0))
 	{
 		return true;
 	}

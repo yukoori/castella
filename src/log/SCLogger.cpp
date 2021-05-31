@@ -59,6 +59,11 @@ void SCLogger::setLevel(ELogLevel logLevel)
 
 void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 {
+	if (!isAvailable(logLevel))
+	{
+		return;
+	}
+
 	if (_format == NULL)
 	{
 		return;
