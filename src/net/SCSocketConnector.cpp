@@ -112,6 +112,9 @@ int SCSocketConnector::open(const SCChar* ip, int port)
 #if defined(_WIN32) || defined(_WIN64)
 		int len = sizeof(err);
 		ret = getsockopt(_socket, SOL_SOCKET, SO_ERROR, (char*)&err, &len);
+#elif defined(_HPUX_)
+		int len = sizeof(err);
+		ret = getsockopt(_socket, SOL_SOCKET, SO_ERROR, &err, &len);
 #else
 		socklen_t len = sizeof(err);
 		ret = getsockopt(_socket, SOL_SOCKET, SO_ERROR, &err, &len);

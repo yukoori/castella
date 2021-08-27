@@ -26,11 +26,11 @@ elif [[ $os = 'ibm64' ]]
 then
 	rm -rf makefile.local;
 	ln -s ../makefile.ibm64 makefile.local;
-elif [[ $os = 'hpux64' ]]
+elif [[ $os = 'HP-UX' ]]
 then
 	MAKE=gmake
 	rm -rf makefile.local;
-	ln -s ../makefile.hpux64 makefile.local;
+	ln -s ../makefile.hpux makefile.local;
 else
 	echo -e $Color_Off$On_Yellow$BBlue"Not supported yet!!" $Color_Off;
 fi

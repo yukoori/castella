@@ -79,7 +79,7 @@ int SCSelectReactor::svc()
 		this->set_sockethandle(fdset, maxfd);
 
 #ifdef _HPUX_
-		int nRet = select(maxfd + 1, (int*)&_fd_set, NULL, NULL, &tv);
+		int nRet = select(maxfd + 1, (int*)&fdset, NULL, NULL, &tv);
 #else
 		int nRet = select(maxfd + 1, &fdset, NULL, NULL, &tv);
 #endif

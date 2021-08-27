@@ -1,0 +1,6 @@
+#ifndef	__SCASTELLA_CONFIG_HPUX_H_
+#define __SCASTELLA_CONFIG_HPUX_H_
+
+#define	USE_PTHREAD
+
+#endif	// !__SCASTELLA_CONFIG_HPUX_H
