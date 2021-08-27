@@ -26,18 +26,21 @@
 #	define	SCString					std::wstring
 #	define	SCOFStream					std::wofstream
 #	define	SCSPRINTF(b, s, f, ...)		wsprintf(b, f, __VA_ARGS__)
-#	define	SCVSPRINTF					StringCchVPrintf
 #	define	SCPRINTF					wprintf
 #	define	SCTEXT(x)					L ## x
 #	define	WIDEN(x)					SCTEXT(x)
 #	define	__SCFILE__					WIDEN(__FILE__)
 #	define	SCFPRINTF(p, f, ...)		fwprintf(p, f, __VA_ARGS__)
 #	define	STRLEN						wcslen
-#	define	SCMKDIR(d)					_wmkdir(d)
 #if defined(_WIN32) || defined(_WIN64)
+#	define	SCVSPRINTF(b, s, m, f, ...)	_vsnwprintf_s(b, s, m, f, __VA_ARGS__)
+#	define	SCVSCPRINTF					_vscwprintf
+#	define	SCMKDIR(d)					_wmkdir(d)
 #	define	SCACCESS					_waccess_s
 #	define	STRNCPY						wcsncpy_s
 #else
+#	define	SCVSPRINTF(b, s, m, f, ...)	vsnwprintf(b, s, f, __VA_ARGS__)
+#	define	SCMKDIR(d)					wmkdir(d)
 #	define	SCACCESS					waccess
 #	define	STRNCPY						wcsncpy
 #endif	/ / defined(_WIN32) || defined(_WIN64)
@@ -52,13 +55,14 @@
 #	define	SCFPRINTF(p, f, ...)		fprintf(p, f, __VA_ARGS__)
 #	define	STRLEN						strlen
 #if defined(_WIN32) || defined(_WIN64)
-#	define	SCVSPRINTF					StringCchVPrintf // vsprintf_s
+#	define	SCVSPRINTF(b, s, m, f, ...)	_vsnprintf_s(b, s, m, f, __VA_ARGS__) // vsprintf_s
+#	define	SCVSCPRINTF					_vscprintf
 #	define	SCSPRINTF(b, s, f, ...)		sprintf_s(b, s, f, __VA_ARGS__)
 #	define	STRNCPY						strncpy_s
 #	define	SCMKDIR(d)					_mkdir(d)
 #	define	SCACCESS					_access
 #else
-#	define	SCVSPRINTF					vsnprintf
+#	define	SCVSPRINTF(b, s, m, f, ...)	vsnprintf(b, s, f, __VA_ARGS__)
 #	define	SCSPRINTF(b, s, f, ...)		snprintf(b, s, f, __VA_ARGS__)
 #	define	STRNCPY						strncpy
 #	define	SCMKDIR(d)					mkdir(d, 0755)

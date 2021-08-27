@@ -2,9 +2,15 @@
 #include "SCThread.h"
 
 #include <time.h>
+#include <sys/timeb.h>
 #if defined(_WIN32) || defined(_WIN64)
 #	include <Windows.h>
+#	if _MSC_VER < 1600
+#		define va_copy(d, s) ((d) = (s))
+#	endif // MSVC_VERSION < 1600
 #endif // defined(_WIN32) || defined(_WIN64)
+
+#define MAX_BUFFER_SIZE	2048
 
 SCLogFormat::SCLogFormat()
 	: _data(SCTEXT(""))
@@ -20,14 +26,35 @@ SCLogFormat::~SCLogFormat()
 void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list argp)
 {
 	// 
-
-	SCChar buffer[2048] = { '\0', };
-	SCVSPRINTF(buffer, sizeof(buffer), format, argp);
-
-	_data  = getLevelPrefix(logLevel);
+	_data = getLevelPrefix(logLevel);
 	_data += getTimePrefix();
 	_data += getThreadPrefix();
+
+#if	defined(_WIN32) || defined(_WIN64)
+	va_list copy;
+	va_copy(copy, argp);
+	int count = SCVSCPRINTF(format, copy) + sizeof(SCChar) /* For null */;
+	va_end(copy);
+
+	if (count > MAX_BUFFER_SIZE)
+	{
+		SCString strBuffer;
+		strBuffer.resize(count);
+		SCVSPRINTF(const_cast<SCChar*>(strBuffer.data()), count, count, format, argp);
+
+		_data += strBuffer.c_str();
+	}
+	else
+	{
+		SCChar buffer[MAX_BUFFER_SIZE] = { '\0', };
+		SCVSPRINTF(buffer, count, MAX_BUFFER_SIZE, format, argp);
+		_data += buffer;
+	}
+#else
+	SCChar buffer[MAX_BUFFER_SIZE] = { '\0', };
+	SCVSPRINTF(buffer, MAX_BUFFER_SIZE, MAX_BUFFER_SIZE, format, argp);
 	_data += buffer;
+#endif
 
 	return;
 }
@@ -80,7 +107,6 @@ void SCLogFormat::setRecord(ELogLevel logLevel, const unsigned char* data, const
 		{
 			SCSPRINTF(msg, 192, SCTEXT("%02X "), *b);
 		}
-
 		_data += msg;
 	}
 
