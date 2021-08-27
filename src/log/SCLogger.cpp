@@ -3,8 +3,6 @@
 
 SCLogger::SCLogger()
 	: _logLevel(SC_E_LOG_DEBUG)
-	, _format(NULL)
-	, _bFormatDelete(false)
 {
 	_stream.reserve(0);
 }
@@ -32,24 +30,11 @@ SCLogger::~SCLogger()
 	}
 	_stream.clear();
 	std::vector<SCLogStream*>().swap(_stream);
-
-	// stream life cycle does not depend on this class.
-	if (_format && _bFormatDelete)
-	{
-		delete _format;
-	}
-	_format = NULL;
 }
 
 void SCLogger::addStream(SCLogStream* stream)
 {
 	_stream.push_back(stream);
-}
-
-void SCLogger::setFormatSpecifier(const SCLogFormat* format, bool bFormatDelete)
-{
-	_format = const_cast<SCLogFormat*>(format);
-	_bFormatDelete = bFormatDelete;
 }
 
 void SCLogger::setLevel(ELogLevel logLevel)
@@ -64,21 +49,38 @@ void SCLogger::log(ELogLevel logLevel, const SCChar* format, ...)
 		return;
 	}
 
-	if (_format == NULL)
-	{
-		return;
-	}
-
 	SCMutexMgr mgr(_mutex);
 
-	va_list argp;
-	va_start(argp, format);
+	std::vector<SCLogStream*>::iterator iter_s = _stream.begin();
+	std::vector<SCLogStream*>::iterator iter_e = _stream.end();
+	for (; iter_s != iter_e; ++iter_s)
+	{
+		SCLogStream* stream = (*iter_s);
+		if (stream == NULL)
+		{
+			continue;
+		}
 
-	_format->setRecord(logLevel, format, argp);
+		if (stream->open() != 0)
+		{
+			continue;
+		}
 
-	va_end(argp);
+		SCLogFormat* logformat = stream->getFormat();
+		if (logformat == NULL)
+		{
+			continue;
+		}
+		
+		va_list argp;
+		va_start(argp, format);
 
-	print();
+		logformat->setRecord(logLevel, format, argp);
+
+		va_end(argp);
+
+		stream->print(logformat->data(), logLevel);
+	}
 }
 
 void SCLogger::hex(ELogLevel logLevel, const unsigned char* data, const int length)
@@ -88,36 +90,32 @@ void SCLogger::hex(ELogLevel logLevel, const unsigned char* data, const int leng
 		return;
 	}
 
-	if (_format == NULL)
-	{
-		return;
-	}
-
 	SCMutexMgr mgr(_mutex);
-
-	_format->setRecord(logLevel, data, length);
-
-	print();
-}
-
-void SCLogger::print()
-{
-	if (_stream.size() == 0)
-	{
-		std::cout << _format->data() << std::endl;
-		return;
-	}
 
 	std::vector<SCLogStream*>::iterator iter_s = _stream.begin();
 	std::vector<SCLogStream*>::iterator iter_e = _stream.end();
 	for (; iter_s != iter_e; ++iter_s)
 	{
 		SCLogStream* stream = (*iter_s);
-		stream->open();
-		stream->print(_format->data());
-	}
+		if (stream == NULL)
+		{
+			continue;
+		}
 
-	return;
+		if (stream->open() != 0)
+		{
+			continue;
+		}
+
+		SCLogFormat* format = stream->getFormat();
+		if (format == NULL)
+		{
+			continue;
+		}
+
+		format->setRecord(logLevel, data, length);
+		stream->print(format->data(), logLevel);
+	}
 }
 
 bool SCLogger::isAvailable(ELogLevel logLevel)

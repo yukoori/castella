@@ -14,7 +14,7 @@ public:
 	virtual int open();
 	virtual int close();
 
-	virtual void print(const SCChar* record);
+	virtual void print(const SCChar* record, ELogLevel level);
 
 	// setter & getter
 	void path(const SCChar* path);

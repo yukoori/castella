@@ -69,8 +69,10 @@ int SCFileStream::close()
 	return 0;
 }
 
-void SCFileStream::print(const SCChar* record)
+void SCFileStream::print(const SCChar* record, ELogLevel level)
 {
+	level = SC_E_LOG_ERROR;
+
 	if (_output->good()) 
 	{
 		*_output << record;

@@ -14,11 +14,11 @@ public:
 
 	const SCChar* data() const;
 
-private:
+protected:
 	// member functions
-	const SCString getLevelPrefix(ELogLevel logLevel);
-	const SCString getTimePrefix();
-	const SCString getThreadPrefix();
+	virtual const SCString getLevelPrefix(ELogLevel logLevel);
+	virtual const SCString getTimePrefix();
+	virtual const SCString getThreadPrefix();
 
 	// member values
 	SCString	_data;

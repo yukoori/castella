@@ -1,0 +1,27 @@
+# 컴파일러
+CC 		= aCC
+CXX		= aCC
+LD 		= aCC
+
+AR 		= ar
+ARFLAGS = -rv
+
+# 기본 옵션 설정
+DEFS = -D_HPUX_
+
+CFLAGS = +DD64 -g -AA -ext -mt
+SH_CFLAGS =
+
+LDFLAGS = -o 
+SH_LDFLAGS = -G
+BINLDFLAGS = $(CFLAGS) $(LDFLAGS)
+
+LINK_SHARED	=
+
+# 명칭 설정
+PREFIX_SO = so
+PREFIX_A = a
+
+#
+INCLDIRS	+= 
+LIBS	+= 

@@ -1,9 +1,7 @@
 #ifndef __SCLOGGER_H
 #define __SCLOGGER_H
 
-#include "SCLogDefine.h"
 #include "SCLogStream.h"
-#include "SCLogFormat.h"
 #include "SCMutex.h"
 
 #include <cstdarg>
@@ -14,7 +12,7 @@ class SCLogger
 {
 public:
 	SCLogger();
-	~SCLogger();
+	virtual ~SCLogger();
 
 // 	//
 // 	friend const SCLogger& operator<<(const SCLogger& in, const SCChar* pszData);
@@ -23,23 +21,18 @@ public:
 // 	friend const SCLogger& operator<<(const SCLogger& in, double d);
 
 	// functions
-	void setLevel(ELogLevel logLevel);
-	void addStream(SCLogStream* stream);
-	void setFormatSpecifier(const SCLogFormat* format = new SCLogFormat, bool bFormatDelete = true);
+	virtual void setLevel(ELogLevel logLevel);
+	virtual void addStream(SCLogStream* stream);
 
-	void log(ELogLevel logLevel, const SCChar* format, ...);
-	void hex(ELogLevel logLevel, const unsigned char* data, const int length);
+	virtual void log(ELogLevel logLevel, const SCChar* format, ...);
+	virtual void hex(ELogLevel logLevel, const unsigned char* data, const int length);
 	
 protected:
-private:
-	// 
-	void print();
 	bool isAvailable(ELogLevel logLevel);
 
+private:
 	// member values
 	std::vector<SCLogStream*>	_stream;
-	SCLogFormat*				_format;
-	bool						_bFormatDelete;
 	ELogLevel					_logLevel;
 
 	SCMutex						_mutex;
