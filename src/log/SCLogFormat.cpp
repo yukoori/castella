@@ -119,32 +119,37 @@ const SCString SCLogFormat::getLevelPrefix(ELogLevel logLevel)
 
 const SCString SCLogFormat::getTimePrefix()
 {
-	time_t	tCurrent = time(NULL);
+	struct timeb tCurrent;
+	ftime(&tCurrent);
+
+	// time_t	tCurrent = time(NULL);
 	struct tm tmCurrent;
 
 	SCChar prefixTime[64] = { '\0', };
 
 #if defined(_WIN32) || defined(_WIN64)
-	errno_t error = localtime_s(&tmCurrent, &tCurrent);
+	errno_t error = localtime_s(&tmCurrent, &tCurrent.time);
 	if (error == 0)
 	{
-		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d] "), tmCurrent.tm_year + 1900,
+		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d.%03d] "), tmCurrent.tm_year + 1900,
 			tmCurrent.tm_mon + 1,
 			tmCurrent.tm_mday,
 			tmCurrent.tm_hour,
 			tmCurrent.tm_min,
-			tmCurrent.tm_sec);
+			tmCurrent.tm_sec,
+			tCurrent.millitm);
 	}
 #else
-	struct tm* result = localtime_r(&tCurrent, &tmCurrent);
+	struct tm* result = localtime_r(&tCurrent.time, &tmCurrent);
 	if (result != NULL)
 	{
-		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d] "), tmCurrent.tm_year + 1900,
+		SCSPRINTF(prefixTime, 64, SCTEXT("[%04d.%02d.%02d %02d:%02d:%02d.%03d] "), tmCurrent.tm_year + 1900,
 			tmCurrent.tm_mon + 1,
 			tmCurrent.tm_mday,
 			tmCurrent.tm_hour,
 			tmCurrent.tm_min,
-			tmCurrent.tm_sec);
+			tmCurrent.tm_sec,
+			tCurrent.millitm);
 	}
 #endif // defined(_WIN32) || defined(_WIN64)
 
