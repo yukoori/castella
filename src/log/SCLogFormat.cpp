@@ -38,11 +38,12 @@ void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list ar
 
 	if (count > MAX_BUFFER_SIZE)
 	{
-		SCString strBuffer;
-		strBuffer.resize(count);
-		SCVSPRINTF(const_cast<SCChar*>(strBuffer.data()), count, count, format, argp);
+		SCChar* buffer = new SCChar[count];
+		SCVSPRINTF(buffer, count, count, format, argp);
 
-		_data += strBuffer.c_str();
+		_data += buffer;
+
+		if (buffer) delete buffer; buffer = NULL;
 	}
 	else
 	{
