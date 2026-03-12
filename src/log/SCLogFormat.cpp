@@ -125,7 +125,7 @@ const SCString SCLogFormat::getLevelPrefix(ELogLevel logLevel)
 	switch (logLevel)
 	{
 	case SC_E_LOG_ERROR:
-		prefixLevel = SCTEXT("ERRO ");
+		prefixLevel = SCTEXT("ERROR ");
 		break;
 	case SC_E_LOG_WARNING:
 		prefixLevel = SCTEXT("WARN ");
@@ -134,7 +134,7 @@ const SCString SCLogFormat::getLevelPrefix(ELogLevel logLevel)
 		prefixLevel = SCTEXT("INFO ");
 		break;
 	case SC_E_LOG_DEBUG:
-		prefixLevel = SCTEXT("DEBU ");
+		prefixLevel = SCTEXT("DEBUG ");
 		break;
 	default:
 		prefixLevel = SCTEXT("UNKN ");
