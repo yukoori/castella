@@ -25,10 +25,13 @@ SCLogFormat::~SCLogFormat()
 
 void SCLogFormat::setRecord(ELogLevel logLevel, const SCChar* format, va_list argp)
 {
-	// 
-	_data = getLevelPrefix(logLevel);
-	_data += getTimePrefix();
-	_data += getThreadPrefix();
+	if (_customFormatter) {
+        _customFormatter(this, _data, logLevel);
+    } else {
+        _data = getLevelPrefix(logLevel);
+        _data += getTimePrefix();
+        _data += getThreadPrefix();
+    }
 
 #if	defined(_WIN32) || defined(_WIN64)
 	va_list copy;
@@ -119,25 +122,33 @@ const SCChar* SCLogFormat::data() const
 	return _data.c_str();
 }
 
+void SCLogFormat::setCustomFormatter(CustomFormatter f)
+{
+    this->_customFormatter = std::move(f);
+}
+
 const SCString SCLogFormat::getLevelPrefix(ELogLevel logLevel)
 {
 	SCString prefixLevel = SCTEXT("");
 	switch (logLevel)
 	{
+	case SC_E_LOG_FATAL:
+		prefixLevel = SCTEXT("FATAL ");
+		break;
 	case SC_E_LOG_ERROR:
 		prefixLevel = SCTEXT("ERROR ");
 		break;
 	case SC_E_LOG_WARNING:
-		prefixLevel = SCTEXT("WARN ");
+		prefixLevel = SCTEXT("WARN  ");
 		break;
 	case SC_E_LOG_INFO:
-		prefixLevel = SCTEXT("INFO ");
+		prefixLevel = SCTEXT("INFO  ");
 		break;
 	case SC_E_LOG_DEBUG:
 		prefixLevel = SCTEXT("DEBUG ");
 		break;
 	default:
-		prefixLevel = SCTEXT("UNKN ");
+		prefixLevel = SCTEXT("UNKN  ");
 		break;
 	}
 
