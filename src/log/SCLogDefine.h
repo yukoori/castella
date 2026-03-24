@@ -5,6 +5,7 @@
 
 typedef enum 
 {
+	SC_E_LOG_FATAL,
 	SC_E_LOG_ERROR,
 	SC_E_LOG_WARNING,
 	SC_E_LOG_INFO,
