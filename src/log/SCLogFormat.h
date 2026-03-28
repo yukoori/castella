@@ -2,6 +2,7 @@
 #define	__SCLOGFORMAT_H
 
 #include "SCLogDefine.h"
+#include <functional>
 
 class SCLogFormat
 {
@@ -14,14 +15,18 @@ public:
 
 	const SCChar* data() const;
 
-protected:
 	// member functions
 	virtual const SCString getLevelPrefix(ELogLevel logLevel);
 	virtual const SCString getTimePrefix();
 	virtual const SCString getThreadPrefix();
 
+	using CustomFormatter = std::function<void(SCLogFormat* self, SCString& data, ELogLevel level)>;
+	void setCustomFormatter(CustomFormatter f);
+
+protected:
 	// member values
 	SCString	_data;
+	CustomFormatter _customFormatter;
 };
 
 
